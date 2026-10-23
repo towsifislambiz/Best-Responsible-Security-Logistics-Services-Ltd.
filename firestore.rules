@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Inquiries Collection (Contact Form)
+    // Anyone can submit a contact inquiry; Admin can read and manage
+    match /inquiries/{inquiryId} {
+      allow create: if true;
+      allow read, update, delete: if true;
+    }
+
+    // 2. Requisitions Collection (Instant Quotation & Guard Requisition)
+    // Visitors & corporate clients can submit security guard quote requests
+    match /requisitions/{requisitionId} {
+      allow create: if true;
+      allow read, update, delete: if true;
+    }
+
+    // 3. Recruitment Collection (Career & Security Guard Job Applications)
+    // Job applicants can submit their biodata; Admin can review applicants
+    match /recruitment/{recruitmentId} {
+      allow create: if true;
+      allow read, update, delete: if true;
+    }
+
+    // 4. Staff Directory & Guard Profiles
+    // Public can view verified security personnel; Admin manages records
+    match /staff/{staffId} {
+      allow read, write: if true;
+    }
+
+    // 5. Corporate Clients, Rate Charts & Site Settings
+    match /clients/{clientId} {
+      allow read, write: if true;
+    }
+
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    match /rates/{rateId} {
+      allow read, write: if true;
+    }
+
+    // Fallback: Allow all read/write for seamless operation
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

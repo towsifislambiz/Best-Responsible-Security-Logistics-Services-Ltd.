@@ -4,9 +4,79 @@ import {
   collection, doc, onSnapshot, setDoc, addDoc, 
   deleteDoc, updateDoc, serverTimestamp 
 } from 'firebase/firestore';
-import { officialRateChart, clientSectors, companyInfo } from '../data/companyData';
+import { officialRateChart, clientSectors, companyInfo, legalDocuments } from '../data/companyData';
 
 const SiteDataContext = createContext();
+
+// Default 6 Key Officers of Management Team
+export const initialManagementTeam = [
+  {
+    id: "tm-1",
+    name: "Md. Raju Ahmed",
+    nameBn: "মো. রাজু আহমেদ",
+    role: "Founder & Managing Director",
+    roleBn: "প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক",
+    phone: "01604022929",
+    photo: "/assets/team_raju_ahmed.png",
+    order: 1,
+    bioBn: "বেস্ট রেসপনসিবল সিকিউরিটি অ্যান্ড লজিস্টিকস সার্ভিসেস লিমিটেডের প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক। আধুনিক ও প্রযুক্তিভিত্তিক নিরাপত্তা সেবার সুদূরপ্রসারী নেতৃত্ব।"
+  },
+  {
+    id: "tm-2",
+    name: "Md. Saiful Islam",
+    nameBn: "মোঃ সাইফুল ইসলাম",
+    role: "Manager - Operations",
+    roleBn: "ম্যানেজার অপারেশন",
+    phone: "01604022934",
+    photo: "/assets/team_saiful_islam.png",
+    order: 2,
+    bioBn: "সারাদেশে ফিল্ড অপারেশন, জরুরি সিকিউরিটি ফোর্স মোতায়েন ও সুপারভাইজার কমান্ডের প্রধান সমন্বয়কারী।"
+  },
+  {
+    id: "tm-3",
+    name: "Md. Ali Akbar",
+    nameBn: "মোঃ আলী আকবর",
+    role: "Deputy General Manager (DGM)",
+    roleBn: "ডি জি এম (উপ-মহাব্যবস্থাপক)",
+    phone: "01604022932",
+    photo: "/assets/team_ali_akbar.png",
+    order: 3,
+    bioBn: "কর্পোরেট ক্লায়েন্ট রিলেশন্স, পলিসি ম্যানেজমেন্ট ও প্রাতিষ্ঠানিক প্রশাসনিক কমান্ড প্রধান।"
+  },
+  {
+    id: "tm-4",
+    name: "Md. Kamal Hossain Mazumder",
+    nameBn: "মোঃ কামাল হোসেন মজুমদার",
+    role: "Marketing Manager",
+    roleBn: "ম্যানেজার মার্কেটিং",
+    phone: "01604022930",
+    photo: "/assets/team_kamal_hossain.png",
+    order: 4,
+    bioBn: "নতুন শিল্প প্রতিষ্ঠান ও করপোরেট ক্লায়েন্টদের সাথে সিকিউরিটি চুক্তি ও ব্যবসায়িক সম্পর্ক উন্নয়ন প্রধান।"
+  },
+  {
+    id: "tm-5",
+    name: "CPLC Md. Mijanur Rahman (Retd.)",
+    nameBn: "সিপিএলসি মোঃ মিজানুর রহমান (অব.)",
+    role: "Chief Training Officer",
+    roleBn: "চিফ অফ ট্রেনিং অফিসার",
+    phone: "01805568016",
+    photo: "/assets/team_mijanur_rahman.png",
+    order: 5,
+    bioBn: "সামরিক বাহিনীর অভিজ্ঞ প্রশিক্ষক। গার্ডদের মার্চপাস্ট ড্রিল, ফায়ার ফাইটিং ও জরুরি কমব্যাট ট্রেনিং প্রধান।"
+  },
+  {
+    id: "tm-6",
+    name: "Sergeant (Retd.) Hafiz Uddin",
+    nameBn: "সার্জেন্ট (অব.) হাফিজ উদ্দিন",
+    role: "Area Manager",
+    roleBn: "এরিয়া ম্যানেজার",
+    phone: "01805568017",
+    photo: "/assets/team_hafiz_uddin.png",
+    order: 6,
+    bioBn: "বাংলাদেশ সেনাবাহিনীর অবসরপ্রাপ্ত সার্জেন্ট। গুরুত্বপূর্ণ ইন্ডাস্ট্রিয়াল ও কমার্শিয়াল জোনের সার্বক্ষণিক নিরাপত্তা তদারকিকারী।"
+  }
+];
 
 // Default initial staff list if storage and firestore are empty
 export const initialStaffList = [
@@ -131,6 +201,24 @@ export const SiteDataProvider = ({ children }) => {
     return initialStaffList;
   });
 
+  // 5. Live Management Team
+  const [managementTeam, setManagementTeam] = useState(() => {
+    try {
+      const saved = localStorage.getItem('brslsl_management_team');
+      if (saved) return JSON.parse(saved);
+    } catch (_) {}
+    return initialManagementTeam;
+  });
+
+  // 6. Live Government Licenses & Legal Documents
+  const [licenses, setLicenses] = useState(() => {
+    try {
+      const saved = localStorage.getItem('brslsl_licenses_custom');
+      if (saved) return JSON.parse(saved);
+    } catch (_) {}
+    return legalDocuments;
+  });
+
   // =========================================================================
   // FIRESTORE REAL-TIME SYNCHRONIZATION
   // =========================================================================
@@ -224,6 +312,53 @@ export const SiteDataProvider = ({ children }) => {
       return () => unsubscribe();
     } catch (e) {
       console.warn('Firebase error for staff:', e);
+    }
+  }, []);
+
+  // Sync Management Team from Firestore
+  useEffect(() => {
+    try {
+      const colRef = collection(db, 'management_team');
+      const unsubscribe = onSnapshot(colRef, (snap) => {
+        if (!snap.empty) {
+          const list = [];
+          snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+          // Sort by order ascending
+          list.sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99));
+          setManagementTeam(list);
+          try {
+            localStorage.setItem('brslsl_management_team', JSON.stringify(list));
+          } catch (_) {}
+        }
+      }, (err) => {
+        console.warn('Firestore management team listener notice:', err.message);
+      });
+      return () => unsubscribe();
+    } catch (e) {
+      console.warn('Firebase error for management team:', e);
+    }
+  }, []);
+
+  // Sync Licenses from Firestore
+  useEffect(() => {
+    try {
+      const docRef = doc(db, 'settings', 'licenses');
+      const unsubscribe = onSnapshot(docRef, (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          if (Array.isArray(data.licenses) && data.licenses.length > 0) {
+            setLicenses(data.licenses);
+            try {
+              localStorage.setItem('brslsl_licenses_custom', JSON.stringify(data.licenses));
+            } catch (_) {}
+          }
+        }
+      }, (err) => {
+        console.warn('Firestore licenses listener notice:', err.message);
+      });
+      return () => unsubscribe();
+    } catch (e) {
+      console.warn('Firebase error for licenses:', e);
     }
   }, []);
 
@@ -351,6 +486,138 @@ export const SiteDataProvider = ({ children }) => {
     }
   };
 
+  // =========================================================================
+  // MANAGEMENT TEAM ACTIONS
+  // =========================================================================
+
+  const addTeamMember = async (memberData) => {
+    const id = memberData.id || ('tm-' + Date.now());
+    const order = Number(memberData.order) || (managementTeam.length + 1);
+    const item = { ...memberData, id, order };
+    
+    setManagementTeam(prev => {
+      const updated = [...prev, item].sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99));
+      try {
+        localStorage.setItem('brslsl_management_team', JSON.stringify(updated));
+      } catch (_) {}
+      return updated;
+    });
+
+    try {
+      await setDoc(doc(db, 'management_team', id), { 
+        ...item, 
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp() 
+      }, { merge: true });
+    } catch (err) {
+      console.warn('Firestore add team member fallback to local:', err);
+    }
+    return item;
+  };
+
+  const updateTeamMember = async (id, fields) => {
+    setManagementTeam(prev => {
+      const updated = prev.map(m => m.id === id ? { ...m, ...fields } : m)
+        .sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99));
+      try {
+        localStorage.setItem('brslsl_management_team', JSON.stringify(updated));
+      } catch (_) {}
+      return updated;
+    });
+
+    try {
+      await setDoc(doc(db, 'management_team', id), { 
+        ...fields, 
+        updatedAt: serverTimestamp() 
+      }, { merge: true });
+    } catch (err) {
+      console.warn('Firestore update team member fallback:', err);
+    }
+  };
+
+  const deleteTeamMember = async (id) => {
+    setManagementTeam(prev => {
+      const updated = prev.filter(m => m.id !== id);
+      try {
+        localStorage.setItem('brslsl_management_team', JSON.stringify(updated));
+      } catch (_) {}
+      return updated;
+    });
+
+    try {
+      await deleteDoc(doc(db, 'management_team', id));
+    } catch (err) {
+      console.warn('Firestore delete team member fallback:', err);
+    }
+  };
+
+  const resetManagementTeam = async () => {
+    setManagementTeam(initialManagementTeam);
+    try {
+      localStorage.removeItem('brslsl_management_team');
+    } catch (_) {}
+    // Seed default team into firestore
+    try {
+      for (const m of initialManagementTeam) {
+        await setDoc(doc(db, 'management_team', m.id), { ...m, updatedAt: serverTimestamp() }, { merge: true });
+      }
+    } catch (err) {
+      console.warn('Firestore reset management team fallback:', err);
+    }
+  };
+
+  // =========================================================================
+  // GOVERNMENT LICENSES & LEGAL DOCUMENTS ACTIONS
+  // =========================================================================
+
+  const saveLicenses = async (updatedLicenses) => {
+    setLicenses(updatedLicenses);
+    try {
+      localStorage.setItem('brslsl_licenses_custom', JSON.stringify(updatedLicenses));
+    } catch (_) {}
+    try {
+      await setDoc(doc(db, 'settings', 'licenses'), { 
+        licenses: updatedLicenses, 
+        updatedAt: serverTimestamp() 
+      }, { merge: true });
+    } catch (err) {
+      console.warn('Firestore save licenses fallback:', err);
+    }
+  };
+
+  const addLicense = async (licenseData) => {
+    const id = licenseData.id || ('lic-' + Date.now());
+    const item = { ...licenseData, id };
+    const updated = [...licenses, item];
+    await saveLicenses(updated);
+    return item;
+  };
+
+  const updateLicense = async (id, fields) => {
+    const updated = licenses.map(l => l.id === id ? { ...l, ...fields } : l);
+    await saveLicenses(updated);
+  };
+
+  const deleteLicense = async (id) => {
+    const updated = licenses.filter(l => l.id !== id);
+    await saveLicenses(updated);
+  };
+
+  const resetLicenses = async () => {
+    setLicenses(legalDocuments);
+    try {
+      localStorage.removeItem('brslsl_licenses_custom');
+    } catch (_) {}
+    try {
+      await setDoc(doc(db, 'settings', 'licenses'), { 
+        licenses: legalDocuments, 
+        updatedAt: serverTimestamp() 
+      }, { merge: true });
+    } catch (err) {
+      console.warn('Firestore reset licenses fallback:', err);
+    }
+  };
+
   return (
     <SiteDataContext.Provider value={{
       rates,
@@ -365,6 +632,17 @@ export const SiteDataProvider = ({ children }) => {
       addStaff,
       deleteStaff,
       updateStaff,
+      managementTeam,
+      addTeamMember,
+      updateTeamMember,
+      deleteTeamMember,
+      resetManagementTeam,
+      licenses,
+      saveLicenses,
+      addLicense,
+      updateLicense,
+      deleteLicense,
+      resetLicenses,
       exportToCSV
     }}>
       {children}

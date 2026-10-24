@@ -5,10 +5,14 @@ import {
 } from 'lucide-react';
 import { legalDocuments } from '../data/companyData';
 import { useLanguage } from '../context/LanguageContext';
+import { useSiteData } from '../context/SiteDataContext';
 
 export default function LicensesPage() {
   const { isBn } = useLanguage();
+  const { licenses } = useSiteData();
   const [selectedDoc, setSelectedDoc] = useState(null);
+
+  const docsToDisplay = (licenses && licenses.length > 0) ? licenses : legalDocuments;
 
   return (
     <div className="bg-[#f8fafc] text-slate-800 py-12 px-4 sm:px-6 lg:px-8 font-sans">
@@ -32,7 +36,7 @@ export default function LicensesPage() {
 
         {/* Legal Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {legalDocuments.map((doc) => (
+          {docsToDisplay.map((doc) => (
             <div 
               key={doc.id}
               className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:border-amber-400 transition-all duration-300 group flex flex-col justify-between"

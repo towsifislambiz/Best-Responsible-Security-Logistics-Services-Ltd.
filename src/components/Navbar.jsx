@@ -52,7 +52,7 @@ export default function Navbar() {
   const [openDesktopDropdown, setOpenDesktopDropdown] = useState(initialOpen); // Desktop click/hover dropdown
   const navRef = useRef(null);
 
-  const isWhoActive = ['/about', '/leadership', '/organogram', '/licenses', '/training'].includes(location.pathname);
+  const isWhoActive = ['/about', '/leadership', '/management-team', '/organogram', '/licenses', '/training'].includes(location.pathname);
   const isServicesActive = location.pathname.startsWith('/services');
   const isPricingActive = ['/pricing', '/hire-guard'].includes(location.pathname);
   const isClientsActive = ['/clients', '/recommendations', '/sectors', '/gallery'].includes(location.pathname);
@@ -262,6 +262,21 @@ export default function Navbar() {
                     </div>
                     <span className="text-[11px] text-slate-500 block mt-0.5 font-normal">
                       {t('nav.mdLeadershipSub')}
+                    </span>
+                  </Link>
+                  <Link 
+                    to="/management-team" 
+                    onClick={closeAll}
+                    className="group/item block px-3 py-2.5 rounded-xl hover:bg-slate-900/[0.05] active:bg-slate-900/[0.08] transition-all duration-150"
+                  >
+                    <div className="flex items-center justify-between">
+                      <strong className="block text-slate-900 text-sm font-semibold group-hover/item:text-amber-600 transition-colors">
+                        {t('nav.managementTeam')}
+                      </strong>
+                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-150" />
+                    </div>
+                    <span className="text-[11px] text-slate-500 block mt-0.5 font-normal">
+                      {t('nav.managementTeamSub')}
                     </span>
                   </Link>
                   <Link 
@@ -707,6 +722,7 @@ export default function Navbar() {
                 <div className="pl-4 space-y-1.5 py-1 text-sm text-slate-300 bg-white/5 rounded p-2 border border-slate-700">
                   <Link to="/about" onClick={closeAll} className="block py-1 hover:text-amber-400">{t('nav.companyProfile')}</Link>
                   <Link to="/leadership" onClick={closeAll} className="block py-1 hover:text-amber-400">{t('nav.mdLeadership')}</Link>
+                  <Link to="/management-team" onClick={closeAll} className="block py-1 hover:text-amber-400">{t('nav.managementTeam')}</Link>
                   <Link to="/organogram" onClick={closeAll} className="block py-1 hover:text-amber-400">{t('nav.organogram')}</Link>
                   <Link to="/licenses" onClick={closeAll} className="block py-1 hover:text-amber-400">{t('nav.licenses')}</Link>
                   <Link to="/training" onClick={closeAll} className="block py-1 hover:text-amber-400">{t('nav.training')}</Link>

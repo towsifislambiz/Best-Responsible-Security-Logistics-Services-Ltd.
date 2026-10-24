@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import { 
   Users, Building, FileCheck, UserPlus, 
   ArrowRight, Phone, Clock, CheckCircle2, ShieldAlert,
-  MessageSquare, Mail, MessageCircle, AlertCircle
+  MessageSquare, Mail, MessageCircle, AlertCircle, Award, FileText
 } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { useSiteData } from '../context/SiteDataContext';
 
 export default function AdminDashboard() {
-  const { staffList, clients } = useSiteData();
+  const { staffList, clients, managementTeam, licenses } = useSiteData();
   const [requisitions, setRequisitions] = useState([]);
   const [recruitmentApps, setRecruitmentApps] = useState([]);
   const [inquiries, setInquiries] = useState([]);
@@ -105,8 +105,8 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Metrics Cards Grid (5 Cards) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      {/* Metrics Cards Grid (7 Cards) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-3">
         
         {/* Card 1: Requisitions */}
         <Link to="/admin/requisitions" className="bg-[#091e38] border border-slate-800 hover:border-amber-500/50 p-4 rounded-2xl shadow-xl flex items-center justify-between transition-all group cursor-pointer">
@@ -123,7 +123,7 @@ export default function AdminDashboard() {
         {/* Card 2: Contact Inquiries */}
         <Link to="/admin/inquiries" className="bg-[#091e38] border border-slate-800 hover:border-amber-500/50 p-4 rounded-2xl shadow-xl flex items-center justify-between transition-all group cursor-pointer">
           <div>
-            <span className="text-slate-400 text-[11px] font-bold uppercase">Contact Inquiries</span>
+            <span className="text-slate-400 text-[11px] font-bold uppercase">Inquiries</span>
             <h3 className="text-2xl font-black text-sky-400 mt-1">{inquiries.length}</h3>
             <span className="text-[10px] text-amber-400 font-semibold">{pendingInquiries} Unread</span>
           </div>
@@ -135,7 +135,7 @@ export default function AdminDashboard() {
         {/* Card 3: Job Applicants */}
         <Link to="/admin/recruitment" className="bg-[#091e38] border border-slate-800 hover:border-amber-500/50 p-4 rounded-2xl shadow-xl flex items-center justify-between transition-all group cursor-pointer">
           <div>
-            <span className="text-slate-400 text-[11px] font-bold uppercase">Job Applicants</span>
+            <span className="text-slate-400 text-[11px] font-bold uppercase">Applicants</span>
             <h3 className="text-2xl font-black text-purple-400 mt-1">{recruitmentApps.length}</h3>
             <span className="text-[10px] text-amber-400 font-semibold">{pendingRecruitment} Review</span>
           </div>
@@ -144,24 +144,48 @@ export default function AdminDashboard() {
           </div>
         </Link>
 
-        {/* Card 4: Staff Roster */}
+        {/* Card 4: Management Team */}
+        <Link to="/admin/management-team" className="bg-[#091e38] border border-slate-800 hover:border-amber-500/50 p-4 rounded-2xl shadow-xl flex items-center justify-between transition-all group cursor-pointer">
+          <div>
+            <span className="text-slate-400 text-[11px] font-bold uppercase">Officers</span>
+            <h3 className="text-2xl font-black text-amber-300 mt-1">{managementTeam?.length || 6}</h3>
+            <span className="text-[10px] text-emerald-400 font-semibold">Key Command</span>
+          </div>
+          <div className="p-3 bg-amber-500/10 text-amber-300 rounded-xl group-hover:scale-110 transition-transform">
+            <Award className="w-5 h-5" />
+          </div>
+        </Link>
+
+        {/* Card 5: Govt Licenses */}
+        <Link to="/admin/licenses" className="bg-[#091e38] border border-slate-800 hover:border-amber-500/50 p-4 rounded-2xl shadow-xl flex items-center justify-between transition-all group cursor-pointer">
+          <div>
+            <span className="text-slate-400 text-[11px] font-bold uppercase">Licenses</span>
+            <h3 className="text-2xl font-black text-teal-400 mt-1">{licenses?.length || 6}</h3>
+            <span className="text-[10px] text-teal-300 font-semibold">Govt Approved</span>
+          </div>
+          <div className="p-3 bg-teal-500/10 text-teal-400 rounded-xl group-hover:scale-110 transition-transform">
+            <FileText className="w-5 h-5" />
+          </div>
+        </Link>
+
+        {/* Card 6: Staff Roster */}
         <Link to="/admin/staff" className="bg-[#091e38] border border-slate-800 hover:border-amber-500/50 p-4 rounded-2xl shadow-xl flex items-center justify-between transition-all group cursor-pointer">
           <div>
-            <span className="text-slate-400 text-[11px] font-bold uppercase">Active Force</span>
-            <h3 className="text-2xl font-black text-amber-400 mt-1">{staffList.length} Guards</h3>
-            <span className="text-[10px] text-emerald-400 font-semibold">Trained & Vetted</span>
+            <span className="text-slate-400 text-[11px] font-bold uppercase">Guards</span>
+            <h3 className="text-2xl font-black text-amber-400 mt-1">{staffList.length}</h3>
+            <span className="text-[10px] text-emerald-400 font-semibold">Active Roster</span>
           </div>
           <div className="p-3 bg-amber-500/10 text-amber-400 rounded-xl group-hover:scale-110 transition-transform">
             <Users className="w-5 h-5" />
           </div>
         </Link>
 
-        {/* Card 5: Corporate Clients */}
+        {/* Card 7: Corporate Clients */}
         <Link to="/admin/clients" className="bg-[#091e38] border border-slate-800 hover:border-amber-500/50 p-4 rounded-2xl shadow-xl flex items-center justify-between transition-all group cursor-pointer">
           <div>
-            <span className="text-slate-400 text-[11px] font-bold uppercase">Clients Brand</span>
+            <span className="text-slate-400 text-[11px] font-bold uppercase">Clients</span>
             <h3 className="text-2xl font-black text-white mt-1">{clients.length}</h3>
-            <span className="text-[10px] text-slate-400">Navana, United, Apex</span>
+            <span className="text-[10px] text-slate-400">70+ Enterprise</span>
           </div>
           <div className="p-3 bg-blue-500/10 text-blue-400 rounded-xl group-hover:scale-110 transition-transform">
             <Building className="w-5 h-5" />

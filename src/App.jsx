@@ -10,6 +10,7 @@ import WhatsAppButton from './components/WhatsAppButton';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import LeadershipPage from './pages/LeadershipPage';
+import ManagementTeamPage from './pages/ManagementTeamPage';
 import OrganogramPage from './pages/OrganogramPage';
 import LicensesPage from './pages/LicensesPage';
 import TrainingPage from './pages/TrainingPage';
@@ -28,6 +29,8 @@ import ContactPage from './pages/ContactPage';
 import AdminLogin from './admin/AdminLogin';
 import AdminLayout from './admin/components/AdminLayout';
 import AdminDashboard from './admin/AdminDashboard';
+import AdminManagementTeam from './admin/AdminManagementTeam';
+import AdminLicenses from './admin/AdminLicenses';
 import AdminStaff from './admin/AdminStaff';
 import AdminClients from './admin/AdminClients';
 import AdminRequisitions from './admin/AdminRequisitions';
@@ -72,6 +75,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/leadership" element={<LeadershipPage />} />
+              <Route path="/management-team" element={<ManagementTeamPage />} />
               <Route path="/organogram" element={<OrganogramPage />} />
               <Route path="/licenses" element={<LicensesPage />} />
               <Route path="/training" element={<TrainingPage />} />
@@ -93,6 +97,8 @@ export default function App() {
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Navigate to="/admin/dashboard" replace />} />
               <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="management-team" element={<AdminManagementTeam />} />
+              <Route path="licenses" element={<AdminLicenses />} />
               <Route path="staff" element={<AdminStaff />} />
               <Route path="clients" element={<AdminClients />} />
               <Route path="requisitions" element={<AdminRequisitions />} />

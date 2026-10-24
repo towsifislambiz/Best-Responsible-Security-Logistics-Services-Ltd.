@@ -194,6 +194,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/management-team" className="hover:text-amber-400 transition-colors flex items-center">
+                  <ArrowRight className="w-3 h-3 mr-1 text-slate-600" />
+                  {isBn ? "ম্যানেজমেন্ট টিম ও কর্মকর্তা" : "Management Team & Officers"}
+                </Link>
+              </li>
+              <li>
                 <Link to="/organogram" className="hover:text-amber-400 transition-colors flex items-center">
                   <ArrowRight className="w-3 h-3 mr-1 text-slate-600" />
                   {isBn ? "কমান্ড অর্গানোগ্রাম" : "Command Organogram"}

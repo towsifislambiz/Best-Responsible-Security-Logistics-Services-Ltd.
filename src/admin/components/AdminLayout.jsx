@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { 
   Shield, LayoutDashboard, Users, Building, 
-  FileCheck, UserPlus, DollarSign, Settings, LogOut, ExternalLink, MessageSquare
+  FileCheck, UserPlus, DollarSign, Settings, LogOut, ExternalLink, MessageSquare, Award, FileText
 } from 'lucide-react';
 import { companyInfo } from '../../data/companyData';
 
@@ -29,6 +29,8 @@ export default function AdminLayout({ children }) {
 
   const menuItems = [
     { title: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
+    { title: "Management Team", path: "/admin/management-team", icon: Award, badge: "Officers" },
+    { title: "Govt Licenses", path: "/admin/licenses", icon: FileText, badge: "Legal" },
     { title: "Staff & Guard Manager", path: "/admin/staff", icon: Users, badge: "Photo Edit" },
     { title: "Client Logos Manager", path: "/admin/clients", icon: Building },
     { title: "Requisition Leads", path: "/admin/requisitions", icon: FileCheck },

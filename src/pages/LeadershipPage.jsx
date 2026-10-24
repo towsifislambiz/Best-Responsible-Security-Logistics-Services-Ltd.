@@ -38,11 +38,11 @@ export default function LeadershipPage() {
             {/* MD Photo / Portrait */}
             <div className="lg:col-span-5 text-center">
               <div className="relative inline-block">
-                <div className="w-56 h-56 sm:w-72 sm:h-72 rounded-3xl overflow-hidden border-4 border-amber-400 shadow-xl mx-auto bg-slate-100">
+                <div className="w-56 h-56 sm:w-72 sm:h-72 rounded-3xl overflow-hidden border-4 border-amber-400 shadow-xl mx-auto bg-gradient-to-b from-slate-100 to-slate-200/90 flex items-end justify-center p-2">
                   <img 
-                    src="/assets/logo (13).png" 
-                    alt="Md. Raju Ahmed with Team" 
-                    className="w-full h-full object-cover object-top"
+                    src="/assets/team_raju_ahmed.png" 
+                    alt="Md. Raju Ahmed - Managing Director" 
+                    className="w-full h-full object-contain object-bottom drop-shadow-md"
                   />
                 </div>
                 <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-950 px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider shadow-md whitespace-nowrap">

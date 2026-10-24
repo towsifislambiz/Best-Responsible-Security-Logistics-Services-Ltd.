@@ -13,6 +13,7 @@ export const companyInfo = {
     name: "Md. Raju Ahmed",
     title: "Managing Director",
     phone: "+88 01604-022929",
+    photo: "/assets/team_raju_ahmed.png",
     message: "Welcome to Best Responsible Security & Logistics Services Ltd. Since our inception in 2021, our primary commitment has been providing ironclad, disciplined, and technologically superior security and logistics solutions. Whether safeguarding critical industrial infrastructure, multinational corporations, or high-profile individuals, our 700+ elite force stands vigilant 24 hours a day, 365 days a year."
   },
 

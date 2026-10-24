@@ -69,28 +69,27 @@ export default function ManagementTeamPage() {
                 }`}
               >
                 <div>
-                  {/* Photo Container */}
-                  <div className="relative h-72 sm:h-80 bg-slate-100 overflow-hidden">
+                  {/* Photo Container - Dedicated Full-Portrait Frame */}
+                  <div className="relative aspect-[4/5] sm:h-96 w-full bg-gradient-to-b from-slate-100 via-slate-50 to-slate-200/90 overflow-hidden flex items-end justify-center p-3 border-b border-slate-100">
                     <img 
                       src={member.photo || '/assets/team_raju_ahmed.png'} 
                       alt={member.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-contain object-bottom group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = '/assets/company-logo.png';
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
                     
                     {/* Badge top-left */}
-                    <div className="absolute top-4 left-4">
+                    <div className="absolute top-4 left-4 z-10">
                       {isTopLeader ? (
                         <span className="inline-flex items-center space-x-1 bg-amber-400 text-slate-950 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                           <Sparkles className="w-3.5 h-3.5" />
                           <span>{isBn ? "প্রতিষ্ঠাতা ও শীর্ষ নেতৃত্ব" : "Top Leadership"}</span>
                         </span>
                       ) : (
-                        <span className="inline-flex items-center space-x-1 bg-slate-900/80 backdrop-blur-md text-amber-400 text-[11px] font-bold px-3 py-1 rounded-full border border-amber-400/30">
+                        <span className="inline-flex items-center space-x-1 bg-slate-900/80 backdrop-blur-md text-amber-400 text-[11px] font-bold px-3 py-1 rounded-full border border-amber-400/30 shadow-sm">
                           <Shield className="w-3 h-3" />
                           <span>{isBn ? `অফিসার #${index + 1}` : `Officer #${index + 1}`}</span>
                         </span>
@@ -98,35 +97,35 @@ export default function ManagementTeamPage() {
                     </div>
 
                     {/* Status badge top-right */}
-                    <div className="absolute top-4 right-4">
+                    <div className="absolute top-4 right-4 z-10">
                       <span className="inline-flex items-center space-x-1 bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow">
                         <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
                         <span>{isBn ? "অন-ডিউটি" : "Active"}</span>
                       </span>
                     </div>
+                  </div>
 
-                    {/* Name overlay on bottom of photo */}
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="text-xl font-black drop-shadow-md group-hover:text-amber-300 transition-colors">
+                  {/* Body Content - Clear Text without Covering Any Photo */}
+                  <div className="p-6 space-y-3">
+                    {/* Member Name */}
+                    <div>
+                      <h3 className="text-xl font-black text-slate-900 group-hover:text-amber-600 transition-colors">
                         {isBn ? (member.nameBn || member.name) : (member.name || member.nameBn)}
                       </h3>
                       {member.nameBn && member.name && (
-                        <p className="text-slate-300 text-xs font-medium drop-shadow">
+                        <p className="text-xs font-semibold text-slate-500 mt-0.5">
                           {isBn ? member.name : member.nameBn}
                         </p>
                       )}
                     </div>
-                  </div>
 
-                  {/* Body Content */}
-                  <div className="p-6 space-y-3">
                     {/* Designation / Post */}
                     <div className="inline-block bg-amber-50 border border-amber-200/80 rounded-xl px-3 py-1 text-amber-900 text-xs font-extrabold">
                       {isBn ? (member.roleBn || member.role) : (member.role || member.roleBn)}
                     </div>
 
                     {/* Bio / Responsibilities */}
-                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                       {isBn ? (member.bioBn || member.bioEn || "দায়িত্বপ্রাপ্ত নির্বাহী কর্মকর্তা") : (member.bioEn || member.bioBn || "Key executive officer")}
                     </p>
                   </div>

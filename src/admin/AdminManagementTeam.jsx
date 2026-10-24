@@ -198,7 +198,7 @@ export default function AdminManagementTeam() {
                 <img
                   src={member.photo || '/assets/team_raju_ahmed.png'}
                   alt={member.name}
-                  className="w-16 h-16 rounded-xl object-cover object-top border-2 border-amber-400/40 shrink-0 bg-slate-900"
+                  className="w-16 h-16 rounded-xl object-contain object-center border-2 border-amber-400/40 shrink-0 bg-slate-900 p-0.5"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = '/assets/company-logo.png';

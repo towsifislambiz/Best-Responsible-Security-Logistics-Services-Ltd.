@@ -422,66 +422,118 @@ export default function AdminManagementTeam() {
                 </div>
               </div>
 
-              {/* Photo Input & Preview */}
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="block text-slate-300 font-semibold">
-                    Photo (Upload & Auto-Optimize to WebP)
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={optimizing}
-                    className="inline-flex items-center space-x-1.5 px-3 py-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg text-[11px] transition-all shadow-sm"
-                  >
-                    <Upload className="w-3.5 h-3.5" />
-                    <span>{optimizing ? "Compressing..." : "Upload from Device"}</span>
-                  </button>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleFileUpload}
-                    accept="image/*"
-                    className="hidden"
-                  />
-                </div>
+              {/* Photo Upload Zone (Direct Gallery / PC Selection) */}
+              <div className="bg-[#050d1a] border-2 border-dashed border-amber-400/50 hover:border-amber-400 rounded-2xl p-4 transition-all space-y-3">
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  
+                  {/* Photo Preview Thumbnail */}
+                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-slate-900 border-2 border-amber-400 shrink-0 flex items-center justify-center p-1 shadow-md">
+                    {formData.photo ? (
+                      <img
+                        src={formData.photo}
+                        alt="Preview"
+                        className="w-full h-full object-contain drop-shadow"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/assets/company-logo.webp';
+                        }}
+                      />
+                    ) : (
+                      <ImageIcon className="w-10 h-10 text-slate-600" />
+                    )}
+                  </div>
 
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="text"
-                    value={formData.photo}
-                    onChange={(e) => setFormData({ ...formData, photo: e.target.value })}
-                    placeholder="/assets/team_saiful_islam.webp or image URL"
-                    className="flex-1 bg-[#050d1a] border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] focus:outline-none focus:border-amber-400"
-                  />
-                  {formData.photo && (
-                    <img
-                      src={formData.photo}
-                      alt="Preview"
-                      className="w-10 h-10 rounded-lg object-contain bg-slate-900 border border-amber-400 shrink-0 p-0.5"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/assets/company-logo.webp';
-                      }}
+                  {/* Actions & Instructions */}
+                  <div className="flex-1 text-center sm:text-left space-y-2">
+                    <div>
+                      <h4 className="text-white font-bold text-sm flex items-center justify-center sm:justify-start gap-1.5">
+                        <Upload className="w-4 h-4 text-amber-400" />
+                        <span>অফিসারের ছবি (Officer Photo)</span>
+                      </h4>
+                      <p className="text-slate-400 text-xs mt-0.5">
+                        আপনার মোবাইল গ্যালারি বা কম্পিউটার থেকে যেকোনো ছবি সিলেক্ট করুন। সাইজ স্বয়ংক্রিয়ভাবে ছোট হয়ে যাবে।
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={optimizing}
+                        className="px-4 py-2.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-amber-500/20 active:scale-95 transition-all cursor-pointer"
+                      >
+                        <Upload className="w-4 h-4" />
+                        <span>{optimizing ? "ছবি অপ্টিমাইজ হচ্ছে..." : "📁 গ্যালারি / পিসি থেকে ছবি বেছে নিন"}</span>
+                      </button>
+
+                      {formData.photo && (
+                        <button
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs transition-colors"
+                        >
+                          ছবি পরিবর্তন করুন
+                        </button>
+                      )}
+                    </div>
+
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileUpload}
+                      accept="image/*"
+                      className="hidden"
                     />
-                  )}
+                  </div>
+
                 </div>
 
+                {/* Live Optimization Badge */}
                 {uploadStats && (
-                  <div className="mt-1.5 p-2 bg-emerald-950/40 border border-emerald-500/30 rounded-xl flex items-center justify-between text-[11px] text-emerald-300">
-                    <span className="flex items-center space-x-1 font-bold">
-                      <Zap className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Auto-Optimized to WebP!</span>
+                  <div className="p-2.5 bg-emerald-950/50 border border-emerald-500/40 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-1 text-xs text-emerald-300">
+                    <span className="flex items-center gap-1.5 font-bold">
+                      <Zap className="w-4 h-4 text-amber-400 animate-pulse" />
+                      <span>ছবি সফলভাবে WebP-তে কনভার্ট হয়েছে!</span>
                     </span>
-                    <span className="font-mono">
-                      {uploadStats.originalSizeKB} KB ➔ <strong>{uploadStats.optimizedSizeKB} KB</strong> ({uploadStats.savingsPct} smaller)
+                    <span className="font-mono text-[11px] bg-emerald-900/40 px-2 py-0.5 rounded border border-emerald-500/30">
+                      {uploadStats.originalSizeKB} KB ➔ <strong>{uploadStats.optimizedSizeKB} KB</strong> ({uploadStats.savingsPct} সেভ)
                     </span>
                   </div>
                 )}
 
-                <p className="text-[10px] text-slate-400 mt-1">
-                  Preset WebP files: /assets/team_raju_ahmed.webp, team_saiful_islam.webp, team_ali_akbar.webp, team_kamal_hossain.webp, team_mijanur_rahman.webp, team_hafiz_uddin.webp
-                </p>
+                {/* Quick Presets for Key Leadership */}
+                <div className="pt-2 border-t border-slate-800/80">
+                  <span className="text-[10px] text-slate-400 font-semibold block mb-1.5">
+                    অথবা বিদ্যমান কর্মকর্তাদের ছবি থেকে বেছে নিন:
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      { name: "মো. রাজু আহমেদ", file: "/assets/team_raju_ahmed.webp" },
+                      { name: "সাইফুল ইসলাম", file: "/assets/team_saiful_islam.webp" },
+                      { name: "আলী আকবর", file: "/assets/team_ali_akbar.webp" },
+                      { name: "কামাল হোসেন", file: "/assets/team_kamal_hossain.webp" },
+                      { name: "মিজানুর রহমান", file: "/assets/team_mijanur_rahman.webp" },
+                      { name: "হাফিজ উদ্দিন", file: "/assets/team_hafiz_uddin.webp" }
+                    ].map(p => (
+                      <button
+                        key={p.file}
+                        type="button"
+                        onClick={() => {
+                          setFormData(prev => ({ ...prev, photo: p.file }));
+                          setUploadStats(null);
+                        }}
+                        className={`text-[10px] px-2.5 py-1 rounded-lg font-bold border transition-all ${
+                          formData.photo === p.file
+                            ? 'bg-amber-400 text-slate-950 border-amber-400'
+                            : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:border-amber-400'
+                        }`}
+                      >
+                        {p.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
               </div>
 
               {/* Responsibilities / Bio */}

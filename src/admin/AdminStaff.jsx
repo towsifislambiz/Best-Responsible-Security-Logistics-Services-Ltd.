@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Users, UserPlus, Trash2, Edit2, CheckCircle2, 
-  Shield, Image as ImageIcon, Search, Sliders, X, Sparkles, Download
+  Shield, Image as ImageIcon, Search, Sliders, X, Sparkles, Download, Upload, Zap
 } from 'lucide-react';
 import PhotoCropper from './components/PhotoCropper';
 import { useSiteData } from '../context/SiteDataContext';
+import { optimizeImage } from '../utils/imageOptimizer';
 
 export default function AdminStaff() {
   const { staffList, addStaff, updateStaff, deleteStaff, exportToCSV } = useSiteData();
@@ -12,6 +13,24 @@ export default function AdminStaff() {
   const [editingId, setEditingId] = useState(null);
   const [isEditingPhoto, setIsEditingPhoto] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [optimizing, setOptimizing] = useState(false);
+  const [uploadStats, setUploadStats] = useState(null);
+  const staffFileRef = useRef(null);
+
+  const handleDirectUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setOptimizing(true);
+    try {
+      const optimized = await optimizeImage(file, { maxWidth: 600, maxHeight: 600, quality: 0.82 });
+      setNewStaff(prev => ({ ...prev, photo: optimized.dataUrl }));
+      setUploadStats(optimized);
+    } catch (err) {
+      alert('Photo upload error: ' + err.message);
+    } finally {
+      setOptimizing(false);
+    }
+  };
 
   // Form State
   const [newStaff, setNewStaff] = useState({
@@ -26,6 +45,7 @@ export default function AdminStaff() {
 
   const handleStartCreate = () => {
     setEditingId(null);
+    setUploadStats(null);
     setNewStaff({
       name: '',
       role: 'Security Guard (Male)',
@@ -40,6 +60,7 @@ export default function AdminStaff() {
 
   const handleStartEdit = (staff) => {
     setEditingId(staff.id);
+    setUploadStats(null);
     setNewStaff({
       name: staff.name || '',
       role: staff.role || 'Security Guard (Male)',
@@ -232,27 +253,73 @@ export default function AdminStaff() {
             ) : (
               <form onSubmit={handleSaveStaff} className="space-y-4 text-xs">
                 
-                {/* Photo Preview & Edit Trigger */}
-                <div className="bg-[#091e38] p-4 rounded-2xl border border-slate-800 flex items-center space-x-4">
-                  <div className="relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-amber-400 shrink-0 bg-slate-950">
-                    <img 
-                      src={newStaff.photo} 
-                      alt="Guard Preview" 
-                      className="w-full h-full object-cover"
-                    />
+                {/* Photo Preview & Direct Gallery/PC Upload + Cropper */}
+                <div className="bg-[#050d1a] border-2 border-dashed border-amber-400/50 hover:border-amber-400 rounded-2xl p-4 transition-all space-y-3">
+                  <div className="flex flex-col sm:flex-row items-center gap-4">
+                    <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-amber-400 shrink-0 bg-slate-950 flex items-center justify-center shadow-md">
+                      <img 
+                        src={newStaff.photo || '/assets/logo (8).webp'} 
+                        alt="Guard Preview" 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/assets/company-logo.webp';
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1 text-center sm:text-left space-y-1.5">
+                      <div>
+                        <h4 className="text-white font-bold text-sm flex items-center justify-center sm:justify-start gap-1.5">
+                          <Upload className="w-4 h-4 text-amber-400" />
+                          <span>গার্ডের ছবি (Guard Profile Photo)</span>
+                        </h4>
+                        <p className="text-slate-400 text-xs mt-0.5">
+                          আপনার মোবাইল গ্যালারি বা কম্পিউটার থেকে সরাসরি ছবি দিন অথবা ক্রপ এডিটরে সাইজ ঠিক করুন।
+                        </p>
+                      </div>
+
+                      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => staffFileRef.current?.click()}
+                          disabled={optimizing}
+                          className="px-3.5 py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black rounded-xl text-xs flex items-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer"
+                        >
+                          <Upload className="w-3.5 h-3.5" />
+                          <span>{optimizing ? 'অপ্টিমাইজ হচ্ছে...' : '📁 গ্যালারি / পিসি থেকে ছবি দিন'}</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setIsEditingPhoto(true)}
+                          className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold rounded-xl text-xs flex items-center gap-1.5 border border-slate-700 transition-colors cursor-pointer"
+                        >
+                          <Sparkles className="w-3.5 h-3.5" />
+                          <span>ক্রপ ও ব্রাইটনেস এডিটর</span>
+                        </button>
+                      </div>
+
+                      <input
+                        type="file"
+                        ref={staffFileRef}
+                        onChange={handleDirectUpload}
+                        accept="image/*"
+                        className="hidden"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-white font-bold text-sm">Guard Profile Photo</h4>
-                    <p className="text-slate-400 text-xs mt-0.5">Crop, zoom, rotate and adjust brightness before saving.</p>
-                    <button
-                      type="button"
-                      onClick={() => setIsEditingPhoto(true)}
-                      className="mt-2 px-3 py-1.5 bg-amber-400 text-slate-950 font-bold rounded-lg text-xs flex items-center space-x-1 hover:bg-amber-300 transition-colors"
-                    >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Open Photo Cropper & Editor</span>
-                    </button>
-                  </div>
+
+                  {uploadStats && (
+                    <div className="p-2 bg-emerald-950/50 border border-emerald-500/40 rounded-xl flex items-center justify-between text-xs text-emerald-300">
+                      <span className="flex items-center gap-1 font-bold">
+                        <Zap className="w-3.5 h-3.5 text-amber-400" />
+                        <span>ছবি সফলভাবে WebP-তে কনভার্ট হয়েছে!</span>
+                      </span>
+                      <span className="font-mono text-[11px] bg-emerald-900/40 px-2 py-0.5 rounded border border-emerald-500/30">
+                        {uploadStats.originalSizeKB} KB ➔ <strong>{uploadStats.optimizedSizeKB} KB</strong> ({uploadStats.savingsPct} সেভ)
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

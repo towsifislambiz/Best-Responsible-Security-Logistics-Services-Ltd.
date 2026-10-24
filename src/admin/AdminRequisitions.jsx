@@ -9,6 +9,7 @@ import {
   collection, onSnapshot, doc, updateDoc, deleteDoc 
 } from 'firebase/firestore';
 import { exportToCSV } from '../context/SiteDataContext';
+import { getMonthEndInfo, isCurrentMonth, exportMonthlyPDF } from '../utils/monthlyManager';
 
 export default function AdminRequisitions() {
   const [requisitions, setRequisitions] = useState([]);
@@ -143,7 +144,25 @@ export default function AdminRequisitions() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => {
+              const monthInfo = getMonthEndInfo();
+              const curReqs = requisitions.filter(r => isCurrentMonth(r.createdAt || r.serverTime));
+              exportMonthlyPDF({
+                type: 'requisitions',
+                title: 'সিকিউরিটি গার্ড রিকুইজিশন মাসিক আর্কাইভ',
+                monthLabel: monthInfo.fullLabel,
+                data: curReqs.length > 0 ? curReqs : requisitions
+              });
+            }}
+            className="px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer active:scale-95"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>📄 চলতি মাসের PDF রিপোর্ট</span>
+          </button>
+
           <button
             onClick={handleExportCSV}
             className="px-4 py-2 bg-[#091e38] hover:bg-[#0c2a4f] text-slate-200 border border-slate-700 font-bold rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer shadow-sm"
@@ -152,6 +171,19 @@ export default function AdminRequisitions() {
             <span>Export CSV</span>
           </button>
         </div>
+      </div>
+
+      {/* Storage & Auto-Pruning Guidance Notice */}
+      <div className="bg-[#071527] border border-amber-500/30 rounded-2xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+          <span className="text-slate-300">
+            <strong>মাসিক ব্যাকআপ পলিসি:</strong> ডাটাবেজ স্টোরেজ পূর্ণ হওয়া রোধে প্রতি মাস শেষ হলে বিগত মাসের রিকুইজিশন ডাটা স্বয়ংক্রিয়ভাবে মুছে ফেলা হয়। মাস শেষ হওয়ার পূর্বে উপরের <strong>'📄 চলতি মাসের PDF রিপোর্ট'</strong> বাটনে ক্লিক করে ফাইলটি সংরক্ষণ করুন।
+          </span>
+        </div>
+        <span className="font-mono text-[11px] text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded-lg border border-amber-500/30 whitespace-nowrap">
+          চলতি মাসের রিকুইজিশন: {requisitions.filter(r => isCurrentMonth(r.createdAt || r.serverTime)).length} টি
+        </span>
       </div>
 
       {/* Metrics Cards */}

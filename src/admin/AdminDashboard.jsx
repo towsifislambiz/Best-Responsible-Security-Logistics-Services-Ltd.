@@ -3,17 +3,34 @@ import { Link } from 'react-router-dom';
 import { 
   Users, Building, FileCheck, UserPlus, 
   ArrowRight, Phone, Clock, CheckCircle2, ShieldAlert,
-  MessageSquare, Mail, MessageCircle, AlertCircle, Award, FileText
+  MessageSquare, Mail, MessageCircle, AlertCircle, Award, FileText,
+  Download, AlertTriangle, Database, Zap
 } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { useSiteData } from '../context/SiteDataContext';
+import { 
+  getMonthEndInfo, 
+  autoPrunePreviousMonths, 
+  isCurrentMonth, 
+  exportMonthlyPDF 
+} from '../utils/monthlyManager';
 
 export default function AdminDashboard() {
   const { staffList, clients, managementTeam, licenses } = useSiteData();
   const [requisitions, setRequisitions] = useState([]);
   const [recruitmentApps, setRecruitmentApps] = useState([]);
   const [inquiries, setInquiries] = useState([]);
+  const [prunedNotice, setPrunedNotice] = useState(null);
+
+  // Auto-prune previous months records to keep database clean
+  useEffect(() => {
+    autoPrunePreviousMonths(db).then((res) => {
+      if (res && res.prunedTotal > 0) {
+        setPrunedNotice(res);
+      }
+    });
+  }, []);
 
   // Real-time Firestore sync
   useEffect(() => {
@@ -69,9 +86,115 @@ export default function AdminDashboard() {
   const pendingInquiries = inquiries.filter(i => (i.status || 'Pending').toLowerCase() === 'pending').length;
   const pendingRecruitment = recruitmentApps.filter(a => (a.status || 'new').toLowerCase() === 'new').length;
 
+  const monthInfo = getMonthEndInfo();
+  const currentMonthReqs = requisitions.filter(r => isCurrentMonth(r.createdAt || r.serverTime));
+  const currentMonthRecs = recruitmentApps.filter(a => isCurrentMonth(a.submittedAt || a.serverTime));
+  const currentMonthInqs = inquiries.filter(i => isCurrentMonth(i.createdAt || i.date));
+  const totalCurrentMonthRecords = currentMonthReqs.length + currentMonthRecs.length + currentMonthInqs.length;
+
+  // Warning triggers during final 5-6 days of the month ONLY IF at least 1 record exists
+  const showWarning = monthInfo.isWarningPeriod && totalCurrentMonthRecords > 0;
+
   return (
     <div className="space-y-8">
       
+      {/* Auto-Prune Notification (if previous month records were cleaned up) */}
+      {prunedNotice && (
+        <div className="bg-emerald-950/60 border border-emerald-500/50 p-4 rounded-2xl flex items-center justify-between text-xs text-emerald-300 shadow-lg">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+            <div>
+              <span className="font-bold">ক্লাউড ডাটাবেজ স্টোরেজ অপ্টিমাইজেশন সম্পন্ন:</span>
+              <span className="ml-1 text-slate-300">
+                বিগত মাসের অপ্রয়োজনীয় {prunedNotice.prunedTotal}টি পুরাতন রেকর্ড সফলভাবে মুছে স্টোরেজ খালি রাখা হয়েছে।
+              </span>
+            </div>
+          </div>
+          <button 
+            onClick={() => setPrunedNotice(null)}
+            className="text-slate-400 hover:text-white text-[11px] underline cursor-pointer ml-4"
+          >
+            বন্ধ করুন
+          </button>
+        </div>
+      )}
+
+      {/* 5-Day End-of-Month Warning Alert Card */}
+      {showWarning && (
+        <div className="bg-gradient-to-r from-amber-950/80 via-[#261704] to-amber-950/80 border-2 border-amber-400 rounded-3xl p-6 sm:p-7 shadow-2xl relative overflow-hidden">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="px-3 py-1 bg-amber-400 text-slate-950 font-black rounded-full text-xs flex items-center gap-1.5 shadow-md">
+                  <AlertTriangle className="w-4 h-4 fill-slate-950 text-amber-400" />
+                  <span>জরুরি স্টোরেজ সতর্কবার্তা (End-of-Month Warning)</span>
+                </span>
+                <span className="px-3 py-1 bg-red-950 text-red-300 border border-red-500/50 rounded-full text-xs font-bold font-mono">
+                  ⏳ {monthInfo.monthBn} শেষ হতে আর মাত্র {monthInfo.daysLeft} দিন বাকি
+                </span>
+                <span className="text-[11px] text-amber-300 font-semibold">
+                  (চলতি মাসের মোট রেকর্ড: {totalCurrentMonthRecords} টি)
+                </span>
+              </div>
+
+              <div>
+                <h2 className="text-xl sm:text-2xl font-black text-white">
+                  চলতি মাসের সব ডাটা এখনই PDF ডাউনলোড করে ব্যাকআপ রাখুন!
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 mt-1.5 leading-relaxed max-w-3xl">
+                  ফায়ারস্টোর ডাটাবেজ স্টোরেজ সুরক্ষিত রাখতে <strong>{monthInfo.fullLabel}</strong> মাস শেষ হওয়ার পর পূর্ববর্তী মাসের সকল রিকুইজিশন, চাকরির আবেদন ও বার্তা স্বয়ংক্রিয়ভাবে ডাটাবেজ এবং এডমিন প্যানেল থেকে মুছে যাবে। ডাটা হারানোর পূর্বে নিচে ক্লিক করে অফিশিয়াল PDF ফাইল হিসেবে ডাউনলোড করে নিজের কাছে সংরক্ষণ করুন।
+                </p>
+              </div>
+            </div>
+
+            {/* Direct 1-Click Monthly PDF Download Buttons */}
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => exportMonthlyPDF({
+                  type: 'requisitions',
+                  title: 'সিকিউরিটি গার্ড রিকুইজিশন মাসিক আর্কাইভ',
+                  monthLabel: monthInfo.fullLabel,
+                  data: currentMonthReqs
+                })}
+                className="px-4 py-2.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer active:scale-95"
+              >
+                <Download className="w-4 h-4" />
+                <span>রিকুইজিশন PDF ডাউনলোড ({currentMonthReqs.length})</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => exportMonthlyPDF({
+                  type: 'recruitment',
+                  title: 'গার্ড চাকরির আবেদন মাসিক আর্কাইভ',
+                  monthLabel: monthInfo.fullLabel,
+                  data: currentMonthRecs
+                })}
+                className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-purple-300 hover:text-white border border-purple-500/30 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-95"
+              >
+                <Download className="w-4 h-4" />
+                <span>চাকরির আবেদন PDF ({currentMonthRecs.length})</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => exportMonthlyPDF({
+                  type: 'inquiries',
+                  title: 'যোগাযোগ ও মেসেজ মাসিক আর্কাইভ',
+                  monthLabel: monthInfo.fullLabel,
+                  data: currentMonthInqs
+                })}
+                className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-sky-300 hover:text-white border border-sky-500/30 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-95"
+              >
+                <Download className="w-4 h-4" />
+                <span>মেসেজ ও ইনকোয়ারি PDF ({currentMonthInqs.length})</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Welcome Banner */}
       <div className="bg-gradient-to-r from-[#0c2445] via-[#081830] to-[#0c2445] border-2 border-amber-500/30 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
         <div className="space-y-2">

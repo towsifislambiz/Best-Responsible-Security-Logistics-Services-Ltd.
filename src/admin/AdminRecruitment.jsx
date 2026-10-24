@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { 
   UserPlus, Phone, Calendar, MapPin, Award, 
   Trash2, CheckCircle2, Search, FileText, Download, 
-  RefreshCw, MessageCircle, Clock, Shield
+  RefreshCw, MessageCircle, Clock, Shield, AlertCircle
 } from 'lucide-react';
 import { db } from '../firebase';
 import { 
   collection, onSnapshot, doc, updateDoc, deleteDoc 
 } from 'firebase/firestore';
 import { exportToCSV } from '../context/SiteDataContext';
+import { getMonthEndInfo, isCurrentMonth, exportMonthlyPDF } from '../utils/monthlyManager';
 
 export default function AdminRecruitment() {
   const [apps, setApps] = useState([]);
@@ -143,7 +144,25 @@ export default function AdminRecruitment() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => {
+              const monthInfo = getMonthEndInfo();
+              const curApps = apps.filter(a => isCurrentMonth(a.submittedAt || a.serverTime));
+              exportMonthlyPDF({
+                type: 'recruitment',
+                title: 'গার্ড চাকরির আবেদন মাসিক আর্কাইভ',
+                monthLabel: monthInfo.fullLabel,
+                data: curApps.length > 0 ? curApps : apps
+              });
+            }}
+            className="px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-400 hover:to-purple-500 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer active:scale-95"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>📄 চলতি মাসের আবেদন PDF</span>
+          </button>
+
           <button
             onClick={handleExportCSV}
             className="px-4 py-2 bg-[#091e38] hover:bg-[#0c2a4f] text-slate-200 border border-slate-700 font-bold rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer shadow-sm"
@@ -152,6 +171,19 @@ export default function AdminRecruitment() {
             <span>Export CSV</span>
           </button>
         </div>
+      </div>
+
+      {/* Storage & Auto-Pruning Guidance Notice */}
+      <div className="bg-[#071527] border border-purple-500/30 rounded-2xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 text-purple-400 shrink-0" />
+          <span className="text-slate-300">
+            <strong>মাসিক ব্যাকআপ পলিসি:</strong> ফায়ারস্টোর ডাটাবেজ খালি ও দ্রুত রাখতে প্রতি মাস শেষ হলে বিগত মাসের চাকরির আবেদনগুলো স্বয়ংক্রিয়ভাবে মুছে ফেলা হয়। মাস শেষ হওয়ার পূর্বে উপরের <strong>'📄 চলতি মাসের আবেদন PDF'</strong> বাটনে ক্লিক করে অফিশিয়াল কপি ডাউনলোড করে সংরক্ষণ করুন।
+          </span>
+        </div>
+        <span className="font-mono text-[11px] text-purple-300 bg-purple-950/60 px-2.5 py-1 rounded-lg border border-purple-500/30 whitespace-nowrap">
+          চলতি মাসের আবেদন: {apps.filter(a => isCurrentMonth(a.submittedAt || a.serverTime)).length} টি
+        </span>
       </div>
 
       {/* Metrics Cards */}

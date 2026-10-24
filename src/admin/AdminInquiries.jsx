@@ -10,6 +10,7 @@ import {
   deleteDoc, query, orderBy 
 } from 'firebase/firestore';
 import { exportToCSV } from '../context/SiteDataContext';
+import { getMonthEndInfo, isCurrentMonth, exportMonthlyPDF } from '../utils/monthlyManager';
 
 export default function AdminInquiries() {
   const [inquiries, setInquiries] = useState([]);
@@ -140,7 +141,25 @@ export default function AdminInquiries() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => {
+              const monthInfo = getMonthEndInfo();
+              const curInqs = inquiries.filter(i => isCurrentMonth(i.createdAt || i.date));
+              exportMonthlyPDF({
+                type: 'inquiries',
+                title: 'যোগাযোগ ও মেসেজ মাসিক আর্কাইভ',
+                monthLabel: monthInfo.fullLabel,
+                data: curInqs.length > 0 ? curInqs : inquiries
+              });
+            }}
+            className="px-4 py-2 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-400 hover:to-sky-500 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer active:scale-95"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>📄 চলতি মাসের বার্তা PDF</span>
+          </button>
+
           <button
             onClick={handleExportCSV}
             className="px-4 py-2 bg-[#091e38] hover:bg-[#0c2a4f] text-slate-200 border border-slate-700 font-bold rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer shadow-sm"
@@ -149,6 +168,19 @@ export default function AdminInquiries() {
             <span>Export CSV</span>
           </button>
         </div>
+      </div>
+
+      {/* Storage & Auto-Pruning Guidance Notice */}
+      <div className="bg-[#071527] border border-sky-500/30 rounded-2xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 text-sky-400 shrink-0" />
+          <span className="text-slate-300">
+            <strong>মাসিক ব্যাকআপ পলিসি:</strong> ফায়ারস্টোর ডাটাবেজ খালি রাখতে প্রতি মাস শেষ হলে বিগত মাসের বার্তাগুলো স্বয়ংক্রিয়ভাবে মুছে ফেলা হয়। মাস শেষ হওয়ার পূর্বে উপরের <strong>'📄 চলতি মাসের বার্তা PDF'</strong> বাটনে ক্লিক করে অফিশিয়াল কপি ডাউনলোড করে নিজের কাছে সংরক্ষণ করুন।
+          </span>
+        </div>
+        <span className="font-mono text-[11px] text-sky-300 bg-sky-950/60 px-2.5 py-1 rounded-lg border border-sky-500/30 whitespace-nowrap">
+          চলতি মাসের বার্তা: {inquiries.filter(i => isCurrentMonth(i.createdAt || i.date)).length} টি
+        </span>
       </div>
 
       {/* Metrics Cards */}

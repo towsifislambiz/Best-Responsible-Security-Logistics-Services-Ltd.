@@ -13,7 +13,7 @@ export const companyInfo = {
     name: "Md. Raju Ahmed",
     title: "Managing Director",
     phone: "+88 01604-022929",
-    photo: "/assets/team_raju_ahmed.png",
+    photo: "/assets/team_raju_ahmed.webp",
     message: "Welcome to Best Responsible Security & Logistics Services Ltd. Since our inception in 2021, our primary commitment has been providing ironclad, disciplined, and technologically superior security and logistics solutions. Whether safeguarding critical industrial infrastructure, multinational corporations, or high-profile individuals, our 700+ elite force stands vigilant 24 hours a day, 365 days a year."
   },
 
@@ -110,7 +110,7 @@ export const servicesList = [
     icon: "ShieldCheck",
     badge: "Most Requested",
     banglaBadge: "সর্বাধিক জনপ্রিয়",
-    image: "/assets/logo (8).png",
+    image: "/assets/logo (8).webp",
     features: [
       "2-Week rigorous tactical & physical parade training",
       "Police background verification & biometric record check",
@@ -136,7 +136,7 @@ export const servicesList = [
     icon: "Target",
     badge: "Tactical Elite",
     banglaBadge: "ট্যাকটিক্যাল এলিট",
-    image: "/assets/logo (12).png",
+    image: "/assets/logo (12).webp",
     features: [
       "Government licensed shotguns & handguns with trained marksmen",
       "Evasive driving, motorcade escort & route recon",
@@ -160,7 +160,7 @@ export const servicesList = [
     icon: "Truck",
     badge: "High Security",
     banglaBadge: "সর্বোচ্চ নিরাপত্তা",
-    image: "/assets/logo (3).png",
+    image: "/assets/logo (3).webp",
     features: [
       "GPS-monitored secure cash transport vans with panic buttons",
       "Dual armed gunmen accompanying each transfer run",
@@ -184,7 +184,7 @@ export const servicesList = [
     icon: "Sparkles",
     badge: "Facility Care",
     banglaBadge: "ফ্যাসিলিটি কেয়ার",
-    image: "/assets/logo (9).png",
+    image: "/assets/logo (9).webp",
     features: [
       "Industrial grade scrubbing & window glass facade cleaning",
       "Corporate office peons, tea makers & filing helpers",
@@ -208,7 +208,7 @@ export const servicesList = [
     icon: "Users",
     badge: "Event Ready",
     banglaBadge: "ইভেন্ট রেডি",
-    image: "/assets/logo (11).png",
+    image: "/assets/logo (11).webp",
     features: [
       "Access control barricades & walk-through archway screening",
       "Bouncer teams for backstage & stage perimeter protection",
@@ -232,7 +232,7 @@ export const servicesList = [
     icon: "Video",
     badge: "Tech Powered",
     banglaBadge: "প্রযুক্তি নির্ভর",
-    image: "/assets/logo (6).png",
+    image: "/assets/logo (6).webp",
     features: [
       "IP CCTV, PTZ cameras & AI perimeter intrusion detection",
       "Walk-through metal detector (Archway) & handheld scanners",
@@ -256,7 +256,7 @@ export const servicesList = [
     icon: "FileCheck",
     badge: "Consultancy",
     banglaBadge: "পরামর্শ ও অডিট",
-    image: "/assets/logo (10).png",
+    image: "/assets/logo (10).webp",
     features: [
       "Comprehensive vulnerabilities assessment report",
       "Fire safety, hazard chemical & emergency exit inspection",
@@ -331,84 +331,84 @@ export const clientSectors = [
 export const galleryPhotos = [
   {
     id: "g1",
-    src: "/assets/Screenshot 2026-10-22 010044.png",
+    src: "/assets/Screenshot 2026-10-22 010044.webp",
     category: "Training",
     title: "Outdoor Guard Drill & Field Training Ground",
     caption: "Cadets undergoing physical endurance and formation drill"
   },
   {
     id: "g2",
-    src: "/assets/logo (3).png",
+    src: "/assets/logo (3).webp",
     category: "Parade",
     title: "Full Guard Battalion Saluting Formation",
     caption: "Over 50 uniformed personnel lined up for inspection"
   },
   {
     id: "g3",
-    src: "/assets/logo (10).png",
+    src: "/assets/logo (10).webp",
     category: "Inspection",
     title: "Supervisor Morning Inspection & Briefing",
     caption: "Field officers reviewing standard operating security procedures"
   },
   {
     id: "g4",
-    src: "/assets/logo (11).png",
+    src: "/assets/logo (11).webp",
     category: "Parade",
     title: "Synchronized Guard Marching Parade",
     caption: "Rooftop tactical march drill ensuring highest discipline"
   },
   {
     id: "g5",
-    src: "/assets/logo (12).png",
+    src: "/assets/logo (12).webp",
     category: "Corporate",
     title: "Corporate Atrium Guard Placement",
     caption: "Guards stationed in front of multi-storey corporate headquarters"
   },
   {
     id: "g6",
-    src: "/assets/logo (4).png",
+    src: "/assets/logo (4).webp",
     category: "Deployment",
     title: "Retail Deployment at Amana Big Bazar",
     caption: "Front entrance security squad saluting at retail client premises"
   },
   {
     id: "g7",
-    src: "/assets/logo (5).png",
+    src: "/assets/logo (5).webp",
     category: "Deployment",
     title: "Amana Big Bazar Security Guard Squad",
     caption: "Commercial supermarket entrance access control team"
   },
   {
     id: "g8",
-    src: "/assets/logo (8).png",
+    src: "/assets/logo (8).webp",
     category: "Uniform",
     title: "Elite Navy Corporate Uniform Squad",
     caption: "Smart, combat-booted male security guards"
   },
   {
     id: "g9",
-    src: "/assets/logo (2).png",
+    src: "/assets/logo (2).webp",
     category: "Female Force",
     title: "Female Security Officer in Tactical Vest",
     caption: "Specialized female security force for corporate and ladies' security"
   },
   {
     id: "g10",
-    src: "/assets/logo (7).png",
+    src: "/assets/logo (7).webp",
     category: "Checkpoint",
     title: "Perimeter Checkpoint Saluting Guard",
     caption: "Main gate vehicle and visitor access control post"
   },
   {
     id: "g11",
-    src: "/assets/logo (9).png",
+    src: "/assets/logo (9).webp",
     category: "Corporate",
     title: "Male & Female Guard Pair at Glass Entrance",
     caption: "Customer welcoming and security screening at showroom door"
   },
   {
     id: "g12",
-    src: "/assets/logo (13).png",
+    src: "/assets/logo (13).webp",
     category: "Leadership",
     title: "Managing Director with Supervisory Team",
     caption: "MD Md. Raju Ahmed reviewing site performance with senior officers"
@@ -421,7 +421,7 @@ export const legalDocuments = [
     id: "lic-1",
     title: "RJSC Certificate of Incorporation",
     subtitle: "Govt. of Bangladesh - Registrar of Joint Stock Companies",
-    image: "/assets/p21_2_Image145.jpg",
+    image: "/assets/p21_2_Image145.webp",
     number: "C-174829/2021",
     desc: "Officially registered Private Limited Company under Companies Act 1994."
   },
@@ -429,7 +429,7 @@ export const legalDocuments = [
     id: "lic-2",
     title: "Government Trade License",
     subtitle: "Dhaka North City Corporation",
-    image: "/assets/p22_2_Image148.jpg",
+    image: "/assets/p22_2_Image148.webp",
     number: "DNCC-TL/029184",
     desc: "Authorized to operate nationwide security, guarding, and facility cleaning services."
   },
@@ -437,7 +437,7 @@ export const legalDocuments = [
     id: "lic-3",
     title: "Tax Identification Certificate (TIN)",
     subtitle: "National Board of Revenue (NBR)",
-    image: "/assets/p23_2_Image151.jpg",
+    image: "/assets/p23_2_Image151.webp",
     number: "TIN-489218491823",
     desc: "Registered corporate taxpayer compliant with NBR laws."
   },
@@ -445,7 +445,7 @@ export const legalDocuments = [
     id: "lic-4",
     title: "Value Added Tax (VAT / BIN) Certificate",
     subtitle: "Customs, Excise & VAT Commissionerate",
-    image: "/assets/p24_2_Image154.jpg",
+    image: "/assets/p24_2_Image154.webp",
     number: "BIN-003829184-0101",
     desc: "Authorized corporate invoice issuer with 100% tax compliance."
   },
@@ -453,7 +453,7 @@ export const legalDocuments = [
     id: "lic-5",
     title: "Ministry of Home Affairs Operational Clearance",
     subtitle: "Police Headquarters & Special Branch Clearance",
-    image: "/assets/p25_2_Image157.jpg",
+    image: "/assets/p25_2_Image157.webp",
     number: "MHA/SEC/2021/784",
     desc: "Vetted and authorized private security service provider license."
   }
@@ -461,10 +461,10 @@ export const legalDocuments = [
 
 // Client Recommendation Letters
 export const clientRecommendationLetters = [
-  { id: "cl-1", client: "Rony Knitwear (Pvt.) Ltd.", image: "/assets/p27_2_Image175.jpg", text: "Commending BRSLSL for 3 consecutive years of zero theft and exceptional guard discipline." },
-  { id: "cl-2", client: "Dowasland Dyeing & Finishing", image: "/assets/p28_2_Image178.jpg", text: "Appreciating 24/7 industrial fire protection and hazardous materials handling." },
-  { id: "cl-3", client: "Sayem Textile Mills", image: "/assets/p29_2_Image181.jpg", text: "High satisfaction with round-the-clock supervisor visits and shift punctuality." },
-  { id: "cl-4", client: "Amana Big Bazar Retail Chain", image: "/assets/p30_2_Image184.jpg", text: "Recognizing outstanding customer service and crowd management during festival shopping." },
-  { id: "cl-5", client: "Confidence Group Logistics", image: "/assets/p31_2_Image187.jpg", text: "Praising flawless cash transit and secured transport protocol." },
-  { id: "cl-6", client: "High Care Hospital", image: "/assets/p32_2_Image190.jpg", text: "Excellent patient escort, ward boy discipline, and emergency parking control." }
+  { id: "cl-1", client: "Rony Knitwear (Pvt.) Ltd.", image: "/assets/p27_2_Image175.webp", text: "Commending BRSLSL for 3 consecutive years of zero theft and exceptional guard discipline." },
+  { id: "cl-2", client: "Dowasland Dyeing & Finishing", image: "/assets/p28_2_Image178.webp", text: "Appreciating 24/7 industrial fire protection and hazardous materials handling." },
+  { id: "cl-3", client: "Sayem Textile Mills", image: "/assets/p29_2_Image181.webp", text: "High satisfaction with round-the-clock supervisor visits and shift punctuality." },
+  { id: "cl-4", client: "Amana Big Bazar Retail Chain", image: "/assets/p30_2_Image184.webp", text: "Recognizing outstanding customer service and crowd management during festival shopping." },
+  { id: "cl-5", client: "Confidence Group Logistics", image: "/assets/p31_2_Image187.webp", text: "Praising flawless cash transit and secured transport protocol." },
+  { id: "cl-6", client: "High Care Hospital", image: "/assets/p32_2_Image190.webp", text: "Excellent patient escort, ward boy discipline, and emergency parking control." }
 ];

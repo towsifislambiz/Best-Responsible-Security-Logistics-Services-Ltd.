@@ -167,7 +167,7 @@ export default function Navbar() {
           <Link to="/" onClick={handleLogoClick} className="flex items-center space-x-2 sm:space-x-3 group min-w-0 select-none cursor-pointer">
             <div className="relative shrink-0">
               <img 
-                src="/assets/company-logo.png" 
+                src="/assets/company-logo.webp" 
                 alt="BRSLSL Shield Logo" 
                 className="w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain rounded-full shadow-lg group-hover:scale-105 transition-transform duration-300 ring-2 ring-amber-400/50"
               />

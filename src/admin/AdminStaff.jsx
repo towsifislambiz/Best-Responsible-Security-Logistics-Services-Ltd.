@@ -21,7 +21,7 @@ export default function AdminStaff() {
     phone: '018XXXXXXXX',
     bloodGroup: 'B+',
     status: 'Active (On-Duty)',
-    photo: '/assets/logo (8).png'
+    photo: '/assets/logo (8).webp'
   });
 
   const handleStartCreate = () => {
@@ -33,7 +33,7 @@ export default function AdminStaff() {
       phone: '018XXXXXXXX',
       bloodGroup: 'B+',
       status: 'Active (On-Duty)',
-      photo: '/assets/logo (8).png'
+      photo: '/assets/logo (8).webp'
     });
     setShowAddModal(true);
   };
@@ -47,7 +47,7 @@ export default function AdminStaff() {
       phone: staff.phone || '',
       bloodGroup: staff.bloodGroup || 'B+',
       status: staff.status || 'Active (On-Duty)',
-      photo: staff.photo || '/assets/logo (8).png'
+      photo: staff.photo || '/assets/logo (8).webp'
     });
     setShowAddModal(true);
   };

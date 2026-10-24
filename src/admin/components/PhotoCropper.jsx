@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Upload, ZoomIn, ZoomOut, RotateCw, Sliders, Check, 
-  X, Image as ImageIcon, Sparkles, RefreshCw
+  X, Image as ImageIcon, Sparkles, RefreshCw, Zap
 } from 'lucide-react';
+import { optimizeImage } from '../../utils/imageOptimizer';
 
 export default function PhotoCropper({ onSave, onCancel, existingImage = null }) {
   const [imageSrc, setImageSrc] = useState(existingImage);
@@ -13,23 +14,33 @@ export default function PhotoCropper({ onSave, onCancel, existingImage = null })
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [optimizing, setOptimizing] = useState(false);
+  const [optimizeStats, setOptimizeStats] = useState(null);
 
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
   const imageObjRef = useRef(null);
 
-  // Handle file select
-  const handleFileChange = (e) => {
+  // Handle file select with automatic WebP optimization
+  const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setImageSrc(event.target.result);
+      setOptimizing(true);
+      try {
+        const optimized = await optimizeImage(file, { maxWidth: 1200, maxHeight: 1200, quality: 0.82 });
+        setImageSrc(optimized.dataUrl);
+        setOptimizeStats(optimized);
+      } catch (err) {
+        console.warn('Auto optimization fallback:', err);
+        const reader = new FileReader();
+        reader.onload = (event) => setImageSrc(event.target.result);
+        reader.readAsDataURL(file);
+      } finally {
+        setOptimizing(false);
         setZoom(1);
         setRotation(0);
         setPan({ x: 0, y: 0 });
-      };
-      reader.readAsDataURL(file);
+      }
     }
   };
 
@@ -100,11 +111,14 @@ export default function PhotoCropper({ onSave, onCancel, existingImage = null })
     setIsDragging(false);
   };
 
-  // Save the cropped image
+  // Save the cropped image as ultra-compact WebP
   const handleExport = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const croppedDataUrl = canvas.toDataURL('image/jpeg', 0.92);
+    let croppedDataUrl = canvas.toDataURL('image/webp', 0.82);
+    if (!croppedDataUrl.startsWith('data:image/webp')) {
+      croppedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+    }
     if (onSave) {
       onSave(croppedDataUrl);
     }

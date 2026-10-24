@@ -10,7 +10,7 @@ import { useSiteData } from '../context/SiteDataContext';
 
 const slidesData = [
   {
-    image: "/assets/logo (3).png",
+    image: "/assets/logo (3).webp",
     tagBn: "বাংলাদেশের নির্ভরযোগ্য সিকিউরিটি ফোর্স",
     tagEn: "BANGLADESH'S PREMIER SECURITY FORCE",
     titleBn: "আপনার শিল্পপ্রতিষ্ঠান ও সম্পদের জন্য নিশ্ছিদ্র নিরাপত্তা",
@@ -25,7 +25,7 @@ const slidesData = [
     link2: "/services"
   },
   {
-    image: "/assets/Screenshot 2026-10-22 010044.png",
+    image: "/assets/Screenshot 2026-10-22 010044.webp",
     tagBn: "কঠোর প্যারেড ও ট্যাকটিক্যাল ট্রেনিং",
     tagEn: "RIGOROUS PARADE & TACTICAL DRILLS",
     titleBn: "জরুরি অগ্নিনির্বাপণ ও ক্রাইসিস মোকাবেলায় প্রস্তুত সুশৃঙ্খল বাহিনী",
@@ -40,7 +40,7 @@ const slidesData = [
     link2: "/pricing"
   },
   {
-    image: "/assets/logo (4).png",
+    image: "/assets/logo (4).webp",
     tagBn: "বাণিজ্যিক ও রিটেইল মল নিরাপত্তা",
     tagEn: "COMMERCIAL & RETAIL DEPLOYMENT",
     titleBn: "নাভানা, ইউনাইটেড, রূপায়ন ও আমানা বিগ বাজারের বিশ্বস্ত সঙ্গী",
@@ -55,7 +55,7 @@ const slidesData = [
     link2: "/hire-guard"
   },
   {
-    image: "/assets/logo (12).png",
+    image: "/assets/logo (12).webp",
     tagBn: "ভিআইপি ক্লোজ প্রটেকশন ও এসকোর্ট",
     tagEn: "TACTICAL CLOSE PROTECTION & ESCORT",
     titleBn: "ভিআইপি এক্সিকিউটিভ বডিগার্ড ও আর্মার্ড ক্যাশ ট্রানজিট",

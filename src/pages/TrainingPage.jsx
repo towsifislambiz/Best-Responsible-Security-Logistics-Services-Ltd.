@@ -169,19 +169,19 @@ export default function TrainingPage() {
         {/* Visual Proof: Real Training Photos */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-md bg-white">
-            <img src="/assets/Screenshot 2026-10-22 010044.png" alt="Outdoor Guard Field Drill" className="w-full h-56 object-cover" />
+            <img src="/assets/Screenshot 2026-10-22 010044.webp" alt="Outdoor Guard Field Drill" className="w-full h-56 object-cover" />
             <div className="p-4 bg-white text-xs text-center font-bold text-slate-900">
               {isBn ? "ক্যাডেট ফিল্ড ফরমেশন ড্রিল" : "Cadet Field Formation Drill"}
             </div>
           </div>
           <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-md bg-white">
-            <img src="/assets/logo (3).png" alt="Full Battalion Salute" className="w-full h-56 object-cover" />
+            <img src="/assets/logo (3).webp" alt="Full Battalion Salute" className="w-full h-56 object-cover" />
             <div className="p-4 bg-white text-xs text-center font-bold text-slate-900">
               {isBn ? "ব্যাটালিয়ন মার্চপাস্ট ও সালাম" : "Battalion Salute & Parade"}
             </div>
           </div>
           <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-md bg-white">
-            <img src="/assets/logo (10).png" alt="Supervisor Morning Inspection" className="w-full h-56 object-cover" />
+            <img src="/assets/logo (10).webp" alt="Supervisor Morning Inspection" className="w-full h-56 object-cover" />
             <div className="p-4 bg-white text-xs text-center font-bold text-slate-900">
               {isBn ? "ডিউটি পূর্ববর্তী সুপারভাইজার ব্রিফিং" : "Pre-Deployment Briefing"}
             </div>

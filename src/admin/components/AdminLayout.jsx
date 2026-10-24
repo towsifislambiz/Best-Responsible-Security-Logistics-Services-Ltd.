@@ -49,7 +49,7 @@ export default function AdminLayout({ children }) {
           {/* Admin Header */}
           <div className="p-4 border-b border-slate-800 flex items-center space-x-3">
             <img 
-              src="/assets/company-logo.png" 
+              src="/assets/company-logo.webp" 
               alt="Logo" 
               className="w-10 h-10 object-contain rounded-full ring-2 ring-amber-400" 
             />

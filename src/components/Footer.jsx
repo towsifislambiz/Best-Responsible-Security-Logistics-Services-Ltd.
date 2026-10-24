@@ -61,7 +61,7 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
               <img 
-                src="/assets/company-logo.png" 
+                src="/assets/company-logo.webp" 
                 alt="BRSLSL Shield" 
                 className="w-12 h-12 object-contain rounded-full ring-2 ring-amber-400/40"
               />

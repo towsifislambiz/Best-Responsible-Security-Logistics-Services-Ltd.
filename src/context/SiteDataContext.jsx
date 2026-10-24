@@ -17,7 +17,7 @@ export const initialManagementTeam = [
     role: "Founder & Managing Director",
     roleBn: "প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক",
     phone: "01604022929",
-    photo: "/assets/team_raju_ahmed.png",
+    photo: "/assets/team_raju_ahmed.webp",
     order: 1,
     bioBn: "বেস্ট রেসপনসিবল সিকিউরিটি অ্যান্ড লজিস্টিকস সার্ভিসেস লিমিটেডের প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক। আধুনিক ও প্রযুক্তিভিত্তিক নিরাপত্তা সেবার সুদূরপ্রসারী নেতৃত্ব।",
     bioEn: "Founder & Managing Director of Best Responsible Security & Logistics Services Ltd. Visionary leader spearheading modern, tech-enabled corporate security across Bangladesh."
@@ -29,7 +29,7 @@ export const initialManagementTeam = [
     role: "Manager - Operations",
     roleBn: "ম্যানেজার অপারেশন",
     phone: "01604022934",
-    photo: "/assets/team_saiful_islam.png",
+    photo: "/assets/team_saiful_islam.webp",
     order: 2,
     bioBn: "সারাদেশে ফিল্ড অপারেশন, জরুরি সিকিউরিটি ফোর্স মোতায়েন ও সুপারভাইজার কমান্ডের প্রধান সমন্বয়কারী।",
     bioEn: "Chief coordinator of nationwide field operations, emergency security force deployments, and field supervisor command hierarchy."
@@ -41,7 +41,7 @@ export const initialManagementTeam = [
     role: "Deputy General Manager (DGM)",
     roleBn: "ডি জি এম (উপ-মহাব্যবস্থাপক)",
     phone: "01604022932",
-    photo: "/assets/team_ali_akbar.png",
+    photo: "/assets/team_ali_akbar.webp",
     order: 3,
     bioBn: "কর্পোরেট ক্লায়েন্ট রিলেশন্স, পলিসি ম্যানেজমেন্ট ও প্রাতিষ্ঠানিক প্রশাসনিক কমান্ড প্রধান।",
     bioEn: "Head of corporate client relations, organizational security policies, statutory compliances, and institutional administrative command."
@@ -53,7 +53,7 @@ export const initialManagementTeam = [
     role: "Marketing Manager",
     roleBn: "ম্যানেজার মার্কেটিং",
     phone: "01604022930",
-    photo: "/assets/team_kamal_hossain.png",
+    photo: "/assets/team_kamal_hossain.webp",
     order: 4,
     bioBn: "নতুন শিল্প প্রতিষ্ঠান ও করপোরেট ক্লায়েন্টদের সাথে সিকিউরিটি চুক্তি ও ব্যবসায়িক সম্পর্ক উন্নয়ন প্রধান।",
     bioEn: "Leading corporate security contract acquisitions, industrial client relations, and strategic business development nationwide."
@@ -65,7 +65,7 @@ export const initialManagementTeam = [
     role: "Chief Training Officer",
     roleBn: "চিফ অফ ট্রেনিং অফিসার",
     phone: "01805568016",
-    photo: "/assets/team_mijanur_rahman.png",
+    photo: "/assets/team_mijanur_rahman.webp",
     order: 5,
     bioBn: "সামরিক বাহিনীর অভিজ্ঞ প্রশিক্ষক। গার্ডদের মার্চপাস্ট ড্রিল, ফায়ার ফাইটিং ও জরুরি কমব্যাট ট্রেনিং প্রধান।",
     bioEn: "Armed forces veteran instructor. Leading recruit march drills, physical fitness, firefighting, and tactical combat security training."
@@ -77,7 +77,7 @@ export const initialManagementTeam = [
     role: "Area Manager",
     roleBn: "এরিয়া ম্যানেজার",
     phone: "01805568017",
-    photo: "/assets/team_hafiz_uddin.png",
+    photo: "/assets/team_hafiz_uddin.webp",
     order: 6,
     bioBn: "বাংলাদেশ সেনাবাহিনীর অবসরপ্রাপ্ত সার্জেন্ট। গুরুত্বপূর্ণ ইন্ডাস্ট্রিয়াল ও কমার্শিয়াল জোনের সার্বক্ষণিক নিরাপত্তা তদারকিকারী।",
     bioEn: "Retired Sergeant of the Bangladesh Army. Supervising round-the-clock physical security operations across key industrial and commercial hubs."
@@ -94,7 +94,7 @@ export const initialStaffList = [
     phone: '01805568012',
     bloodGroup: 'B+',
     status: 'Active (On-Duty)',
-    photo: '/assets/logo (8).png'
+    photo: '/assets/logo (8).webp'
   },
   {
     id: 'st-2',
@@ -104,7 +104,7 @@ export const initialStaffList = [
     phone: '01805568015',
     bloodGroup: 'O+',
     status: 'Active (On-Duty)',
-    photo: '/assets/logo (2).png'
+    photo: '/assets/logo (2).webp'
   },
   {
     id: 'st-3',
@@ -114,7 +114,7 @@ export const initialStaffList = [
     phone: '01805568013',
     bloodGroup: 'A+',
     status: 'Active (Cash Escort)',
-    photo: '/assets/logo (12).png'
+    photo: '/assets/logo (12).webp'
   },
   {
     id: 'st-4',
@@ -124,7 +124,7 @@ export const initialStaffList = [
     phone: '01805568010',
     bloodGroup: 'AB+',
     status: 'Night Patrol Duty',
-    photo: '/assets/logo (10).png'
+    photo: '/assets/logo (10).webp'
   }
 ];
 

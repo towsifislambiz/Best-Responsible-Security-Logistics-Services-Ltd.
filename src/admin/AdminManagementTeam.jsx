@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Users, UserPlus, Trash2, Edit2, CheckCircle2, 
-  Shield, Image as ImageIcon, Search, X, Sparkles, Download, Phone, RefreshCw, ArrowUpDown
+  Shield, Image as ImageIcon, Search, X, Sparkles, Download, Phone, RefreshCw, ArrowUpDown, Upload, Zap
 } from 'lucide-react';
 import { useSiteData } from '../context/SiteDataContext';
+import { optimizeImage } from '../utils/imageOptimizer';
 
 export default function AdminManagementTeam() {
   const { 
@@ -19,6 +20,9 @@ export default function AdminManagementTeam() {
   const [editingId, setEditingId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [saving, setSaving] = useState(false);
+  const [optimizing, setOptimizing] = useState(false);
+  const [uploadStats, setUploadStats] = useState(null);
+  const fileInputRef = useRef(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -27,11 +31,26 @@ export default function AdminManagementTeam() {
     role: '',
     roleBn: '',
     phone: '',
-    photo: '/assets/team_raju_ahmed.png',
+    photo: '/assets/team_raju_ahmed.webp',
     order: 1,
     bioBn: '',
     bioEn: ''
   });
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setOptimizing(true);
+    try {
+      const optimized = await optimizeImage(file, { maxWidth: 1000, maxHeight: 1000, quality: 0.82 });
+      setFormData(prev => ({ ...prev, photo: optimized.dataUrl }));
+      setUploadStats(optimized);
+    } catch (err) {
+      alert('Error optimizing image: ' + err.message);
+    } finally {
+      setOptimizing(false);
+    }
+  };
 
   const handleStartCreate = () => {
     setEditingId(null);
@@ -41,7 +60,7 @@ export default function AdminManagementTeam() {
       role: '',
       roleBn: '',
       phone: '01604022929',
-      photo: '/assets/team_raju_ahmed.png',
+      photo: '/assets/team_raju_ahmed.webp',
       order: (managementTeam?.length || 0) + 1,
       bioBn: '',
       bioEn: ''
@@ -57,7 +76,7 @@ export default function AdminManagementTeam() {
       role: member.role || '',
       roleBn: member.roleBn || '',
       phone: member.phone || '',
-      photo: member.photo || '/assets/team_raju_ahmed.png',
+      photo: member.photo || '/assets/team_raju_ahmed.webp',
       order: member.order || 1,
       bioBn: member.bioBn || '',
       bioEn: member.bioEn || ''
@@ -199,12 +218,12 @@ export default function AdminManagementTeam() {
               {/* Photo & Header */}
               <div className="flex items-start space-x-3">
                 <img
-                  src={member.photo || '/assets/team_raju_ahmed.png'}
+                  src={member.photo || '/assets/team_raju_ahmed.webp'}
                   alt={member.name}
                   className="w-16 h-16 rounded-xl object-contain object-center border-2 border-amber-400/40 shrink-0 bg-slate-900 p-0.5"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = '/assets/company-logo.png';
+                    e.target.src = '/assets/company-logo.webp';
                   }}
                 />
                 <div className="min-w-0 flex-1">
@@ -405,31 +424,63 @@ export default function AdminManagementTeam() {
 
               {/* Photo Input & Preview */}
               <div>
-                <label className="block text-slate-300 font-semibold mb-1">
-                  Photo URL or Asset Path
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-slate-300 font-semibold">
+                    Photo (Upload & Auto-Optimize to WebP)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={optimizing}
+                    className="inline-flex items-center space-x-1.5 px-3 py-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg text-[11px] transition-all shadow-sm"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>{optimizing ? "Compressing..." : "Upload from Device"}</span>
+                  </button>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileUpload}
+                    accept="image/*"
+                    className="hidden"
+                  />
+                </div>
+
                 <div className="flex items-center space-x-2">
                   <input
                     type="text"
                     value={formData.photo}
                     onChange={(e) => setFormData({ ...formData, photo: e.target.value })}
-                    placeholder="/assets/team_saiful_islam.png or image URL"
-                    className="flex-1 bg-[#050d1a] border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:outline-none focus:border-amber-400"
+                    placeholder="/assets/team_saiful_islam.webp or image URL"
+                    className="flex-1 bg-[#050d1a] border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] focus:outline-none focus:border-amber-400"
                   />
                   {formData.photo && (
                     <img
                       src={formData.photo}
                       alt="Preview"
-                      className="w-10 h-10 rounded-lg object-cover border border-amber-400 shrink-0"
+                      className="w-10 h-10 rounded-lg object-contain bg-slate-900 border border-amber-400 shrink-0 p-0.5"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/assets/company-logo.png';
+                        e.target.src = '/assets/company-logo.webp';
                       }}
                     />
                   )}
                 </div>
+
+                {uploadStats && (
+                  <div className="mt-1.5 p-2 bg-emerald-950/40 border border-emerald-500/30 rounded-xl flex items-center justify-between text-[11px] text-emerald-300">
+                    <span className="flex items-center space-x-1 font-bold">
+                      <Zap className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Auto-Optimized to WebP!</span>
+                    </span>
+                    <span className="font-mono">
+                      {uploadStats.originalSizeKB} KB ➔ <strong>{uploadStats.optimizedSizeKB} KB</strong> ({uploadStats.savingsPct} smaller)
+                    </span>
+                  </div>
+                )}
+
                 <p className="text-[10px] text-slate-400 mt-1">
-                  Preset files: /assets/team_raju_ahmed.png, team_saiful_islam.png, team_ali_akbar.png, team_kamal_hossain.png, team_mijanur_rahman.png, team_hafiz_uddin.png
+                  Preset WebP files: /assets/team_raju_ahmed.webp, team_saiful_islam.webp, team_ali_akbar.webp, team_kamal_hossain.webp, team_mijanur_rahman.webp, team_hafiz_uddin.webp
                 </p>
               </div>
 

@@ -108,7 +108,7 @@ export default function HomePage() {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-3xl overflow-hidden border-2 border-slate-200 shadow-xl">
               <img 
-                src="/assets/logo (8).png" 
+                src="/assets/logo (8).webp" 
                 alt="Elite Security Guards" 
                 className="w-full h-[420px] object-cover"
               />

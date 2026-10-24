@@ -81,12 +81,12 @@ export default function ManagementTeamPage() {
                   {/* Photo Container - Dedicated Full-Portrait Frame */}
                   <div className="relative aspect-[4/5] sm:h-96 w-full bg-gradient-to-b from-slate-100 via-slate-50 to-slate-200/90 overflow-hidden flex items-end justify-center p-3 border-b border-slate-100">
                     <img 
-                      src={member.photo || '/assets/team_raju_ahmed.png'} 
+                      src={member.photo || '/assets/team_raju_ahmed.webp'} 
                       alt={member.name}
                       className="w-full h-full object-contain object-bottom group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/assets/company-logo.png';
+                        e.target.src = '/assets/company-logo.webp';
                       }}
                     />
                     

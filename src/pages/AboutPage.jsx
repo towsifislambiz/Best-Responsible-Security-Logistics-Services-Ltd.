@@ -75,7 +75,7 @@ export default function AboutPage() {
           <div className="lg:col-span-6">
             <div className="rounded-2xl overflow-hidden border-2 border-slate-200 shadow-xl relative">
               <img 
-                src="/assets/logo (11).png" 
+                src="/assets/logo (11).webp" 
                 alt="BRSLSL Guard Parade" 
                 className="w-full h-[380px] object-cover"
               />

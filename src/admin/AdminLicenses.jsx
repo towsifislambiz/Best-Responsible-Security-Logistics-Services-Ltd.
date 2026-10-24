@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   FileCheck, Plus, Trash2, Edit2, CheckCircle2, 
-  Shield, Image as ImageIcon, Search, X, Sparkles, Download, RefreshCw, Eye, ExternalLink
+  Shield, Image as ImageIcon, Search, X, Sparkles, Download, RefreshCw, Eye, ExternalLink, Upload, Zap
 } from 'lucide-react';
 import { useSiteData } from '../context/SiteDataContext';
+import { optimizeImage } from '../utils/imageOptimizer';
 
 export default function AdminLicenses() {
   const { 
@@ -20,6 +21,9 @@ export default function AdminLicenses() {
   const [searchTerm, setSearchTerm] = useState('');
   const [saving, setSaving] = useState(false);
   const [previewDoc, setPreviewDoc] = useState(null);
+  const [optimizing, setOptimizing] = useState(false);
+  const [uploadStats, setUploadStats] = useState(null);
+  const fileInputRef = useRef(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -27,8 +31,23 @@ export default function AdminLicenses() {
     subtitle: '',
     number: '',
     desc: '',
-    image: '/assets/p21_2_Image145.jpg'
+    image: '/assets/p21_2_Image145.webp'
   });
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setOptimizing(true);
+    try {
+      const optimized = await optimizeImage(file, { maxWidth: 1600, maxHeight: 1600, quality: 0.82 });
+      setFormData(prev => ({ ...prev, image: optimized.dataUrl }));
+      setUploadStats(optimized);
+    } catch (err) {
+      alert('Error optimizing document image: ' + err.message);
+    } finally {
+      setOptimizing(false);
+    }
+  };
 
   const handleStartCreate = () => {
     setEditingId(null);
@@ -37,7 +56,7 @@ export default function AdminLicenses() {
       subtitle: 'Government Legal Clearance',
       number: 'REF-' + Math.floor(100000 + Math.random() * 900000),
       desc: '',
-      image: '/assets/p21_2_Image145.jpg'
+      image: '/assets/p21_2_Image145.webp'
     });
     setShowModal(true);
   };
@@ -49,7 +68,7 @@ export default function AdminLicenses() {
       subtitle: doc.subtitle || '',
       number: doc.number || '',
       desc: doc.desc || '',
-      image: doc.image || '/assets/p21_2_Image145.jpg'
+      image: doc.image || '/assets/p21_2_Image145.webp'
     });
     setShowModal(true);
   };
@@ -190,7 +209,7 @@ export default function AdminLicenses() {
                   onClick={() => setPreviewDoc(doc)}
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = '/assets/company-logo.png';
+                    e.target.src = '/assets/company-logo.webp';
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#071527] via-transparent to-transparent"></div>
@@ -349,32 +368,64 @@ export default function AdminLicenses() {
               </div>
 
               <div>
-                <label className="block text-slate-300 font-semibold mb-1">
-                  Document Image Path or URL *
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-slate-300 font-semibold">
+                    Document Image (Upload & Auto-Optimize to WebP) *
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={optimizing}
+                    className="inline-flex items-center space-x-1.5 px-3 py-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg text-[11px] transition-all shadow-sm"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>{optimizing ? "Compressing..." : "Upload Certificate Scan"}</span>
+                  </button>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileUpload}
+                    accept="image/*"
+                    className="hidden"
+                  />
+                </div>
+
                 <div className="flex items-center space-x-2">
                   <input
                     type="text"
                     required
                     value={formData.image}
                     onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="/assets/p21_2_Image145.jpg or image URL"
-                    className="flex-1 bg-[#050d1a] border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:outline-none focus:border-amber-400"
+                    placeholder="/assets/p21_2_Image145.webp or image URL"
+                    className="flex-1 bg-[#050d1a] border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] focus:outline-none focus:border-amber-400"
                   />
                   {formData.image && (
                     <img
                       src={formData.image}
                       alt="Doc Preview"
-                      className="w-10 h-10 rounded-lg object-cover border border-amber-400 shrink-0"
+                      className="w-10 h-10 rounded-lg object-contain bg-slate-900 border border-amber-400 shrink-0 p-0.5"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/assets/company-logo.png';
+                        e.target.src = '/assets/company-logo.webp';
                       }}
                     />
                   )}
                 </div>
+
+                {uploadStats && (
+                  <div className="mt-1.5 p-2 bg-emerald-950/40 border border-emerald-500/30 rounded-xl flex items-center justify-between text-[11px] text-emerald-300">
+                    <span className="flex items-center space-x-1 font-bold">
+                      <Zap className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Auto-Optimized Certificate to WebP!</span>
+                    </span>
+                    <span className="font-mono">
+                      {uploadStats.originalSizeKB} KB ➔ <strong>{uploadStats.optimizedSizeKB} KB</strong> ({uploadStats.savingsPct} smaller)
+                    </span>
+                  </div>
+                )}
+
                 <p className="text-[10px] text-slate-400 mt-1">
-                  Preset files: /assets/p21_2_Image145.jpg (RJSC), /assets/p22_2_Image148.jpg (TIN), /assets/p23_2_Image151.jpg (Trade License), /assets/p24_2_Image154.jpg (BIN), /assets/p25_2_Image157.jpg (Fire License)
+                  Preset WebP files: /assets/p21_2_Image145.webp (RJSC), /assets/p22_2_Image148.webp (TIN), /assets/p23_2_Image151.webp (Trade License), /assets/p24_2_Image154.webp (BIN), /assets/p25_2_Image157.webp (Fire License)
                 </p>
               </div>
 
@@ -446,7 +497,7 @@ export default function AdminLicenses() {
                 className="max-h-[60vh] object-contain rounded-xl shadow-lg"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/assets/company-logo.png';
+                  e.target.src = '/assets/company-logo.webp';
                 }}
               />
             </div>

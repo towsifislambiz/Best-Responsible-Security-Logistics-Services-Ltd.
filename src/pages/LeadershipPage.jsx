@@ -40,7 +40,7 @@ export default function LeadershipPage() {
               <div className="relative inline-block">
                 <div className="w-56 h-56 sm:w-72 sm:h-72 rounded-3xl overflow-hidden border-4 border-amber-400 shadow-xl mx-auto bg-gradient-to-b from-slate-100 to-slate-200/90 flex items-end justify-center p-2">
                   <img 
-                    src="/assets/team_raju_ahmed.png" 
+                    src="/assets/team_raju_ahmed.webp" 
                     alt="Md. Raju Ahmed - Managing Director" 
                     className="w-full h-full object-contain object-bottom drop-shadow-md"
                   />

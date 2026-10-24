@@ -7,6 +7,15 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import { useSiteData } from '../context/SiteDataContext';
 
+const defaultEnglishBios = {
+  "tm-1": "Founder & Managing Director of Best Responsible Security & Logistics Services Ltd. Visionary leader spearheading modern, tech-enabled corporate security across Bangladesh.",
+  "tm-2": "Chief coordinator of nationwide field operations, emergency security force deployments, and field supervisor command hierarchy.",
+  "tm-3": "Head of corporate client relations, organizational security policies, statutory compliances, and institutional administrative command.",
+  "tm-4": "Leading corporate security contract acquisitions, industrial client relations, and strategic business development nationwide.",
+  "tm-5": "Armed forces veteran instructor. Leading recruit march drills, physical fitness, firefighting, and tactical combat security training.",
+  "tm-6": "Retired Sergeant of the Bangladesh Army. Supervising round-the-clock physical security operations across key industrial and commercial hubs."
+};
+
 export default function ManagementTeamPage() {
   const { isBn } = useLanguage();
   const { managementTeam, siteSettings } = useSiteData();
@@ -112,9 +121,9 @@ export default function ManagementTeamPage() {
                       <h3 className="text-xl font-black text-slate-900 group-hover:text-amber-600 transition-colors">
                         {isBn ? (member.nameBn || member.name) : (member.name || member.nameBn)}
                       </h3>
-                      {member.nameBn && member.name && (
+                      {isBn && member.name && (
                         <p className="text-xs font-semibold text-slate-500 mt-0.5">
-                          {isBn ? member.name : member.nameBn}
+                          {member.name}
                         </p>
                       )}
                     </div>
@@ -126,7 +135,9 @@ export default function ManagementTeamPage() {
 
                     {/* Bio / Responsibilities */}
                     <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                      {isBn ? (member.bioBn || member.bioEn || "দায়িত্বপ্রাপ্ত নির্বাহী কর্মকর্তা") : (member.bioEn || member.bioBn || "Key executive officer")}
+                      {isBn 
+                        ? (member.bioBn || member.bioEn || "দায়িত্বপ্রাপ্ত নির্বাহী কর্মকর্তা") 
+                        : (member.bioEn || defaultEnglishBios[member.id] || "Key executive officer responsible for operational security and command supervision.")}
                     </p>
                   </div>
                 </div>

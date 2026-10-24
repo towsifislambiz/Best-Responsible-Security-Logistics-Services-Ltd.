@@ -19,7 +19,8 @@ export const initialManagementTeam = [
     phone: "01604022929",
     photo: "/assets/team_raju_ahmed.png",
     order: 1,
-    bioBn: "বেস্ট রেসপনসিবল সিকিউরিটি অ্যান্ড লজিস্টিকস সার্ভিসেস লিমিটেডের প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক। আধুনিক ও প্রযুক্তিভিত্তিক নিরাপত্তা সেবার সুদূরপ্রসারী নেতৃত্ব।"
+    bioBn: "বেস্ট রেসপনসিবল সিকিউরিটি অ্যান্ড লজিস্টিকস সার্ভিসেস লিমিটেডের প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক। আধুনিক ও প্রযুক্তিভিত্তিক নিরাপত্তা সেবার সুদূরপ্রসারী নেতৃত্ব।",
+    bioEn: "Founder & Managing Director of Best Responsible Security & Logistics Services Ltd. Visionary leader spearheading modern, tech-enabled corporate security across Bangladesh."
   },
   {
     id: "tm-2",
@@ -30,7 +31,8 @@ export const initialManagementTeam = [
     phone: "01604022934",
     photo: "/assets/team_saiful_islam.png",
     order: 2,
-    bioBn: "সারাদেশে ফিল্ড অপারেশন, জরুরি সিকিউরিটি ফোর্স মোতায়েন ও সুপারভাইজার কমান্ডের প্রধান সমন্বয়কারী।"
+    bioBn: "সারাদেশে ফিল্ড অপারেশন, জরুরি সিকিউরিটি ফোর্স মোতায়েন ও সুপারভাইজার কমান্ডের প্রধান সমন্বয়কারী।",
+    bioEn: "Chief coordinator of nationwide field operations, emergency security force deployments, and field supervisor command hierarchy."
   },
   {
     id: "tm-3",
@@ -41,7 +43,8 @@ export const initialManagementTeam = [
     phone: "01604022932",
     photo: "/assets/team_ali_akbar.png",
     order: 3,
-    bioBn: "কর্পোরেট ক্লায়েন্ট রিলেশন্স, পলিসি ম্যানেজমেন্ট ও প্রাতিষ্ঠানিক প্রশাসনিক কমান্ড প্রধান।"
+    bioBn: "কর্পোরেট ক্লায়েন্ট রিলেশন্স, পলিসি ম্যানেজমেন্ট ও প্রাতিষ্ঠানিক প্রশাসনিক কমান্ড প্রধান।",
+    bioEn: "Head of corporate client relations, organizational security policies, statutory compliances, and institutional administrative command."
   },
   {
     id: "tm-4",
@@ -52,7 +55,8 @@ export const initialManagementTeam = [
     phone: "01604022930",
     photo: "/assets/team_kamal_hossain.png",
     order: 4,
-    bioBn: "নতুন শিল্প প্রতিষ্ঠান ও করপোরেট ক্লায়েন্টদের সাথে সিকিউরিটি চুক্তি ও ব্যবসায়িক সম্পর্ক উন্নয়ন প্রধান।"
+    bioBn: "নতুন শিল্প প্রতিষ্ঠান ও করপোরেট ক্লায়েন্টদের সাথে সিকিউরিটি চুক্তি ও ব্যবসায়িক সম্পর্ক উন্নয়ন প্রধান।",
+    bioEn: "Leading corporate security contract acquisitions, industrial client relations, and strategic business development nationwide."
   },
   {
     id: "tm-5",
@@ -63,7 +67,8 @@ export const initialManagementTeam = [
     phone: "01805568016",
     photo: "/assets/team_mijanur_rahman.png",
     order: 5,
-    bioBn: "সামরিক বাহিনীর অভিজ্ঞ প্রশিক্ষক। গার্ডদের মার্চপাস্ট ড্রিল, ফায়ার ফাইটিং ও জরুরি কমব্যাট ট্রেনিং প্রধান।"
+    bioBn: "সামরিক বাহিনীর অভিজ্ঞ প্রশিক্ষক। গার্ডদের মার্চপাস্ট ড্রিল, ফায়ার ফাইটিং ও জরুরি কমব্যাট ট্রেনিং প্রধান।",
+    bioEn: "Armed forces veteran instructor. Leading recruit march drills, physical fitness, firefighting, and tactical combat security training."
   },
   {
     id: "tm-6",
@@ -74,7 +79,8 @@ export const initialManagementTeam = [
     phone: "01805568017",
     photo: "/assets/team_hafiz_uddin.png",
     order: 6,
-    bioBn: "বাংলাদেশ সেনাবাহিনীর অবসরপ্রাপ্ত সার্জেন্ট। গুরুত্বপূর্ণ ইন্ডাস্ট্রিয়াল ও কমার্শিয়াল জোনের সার্বক্ষণিক নিরাপত্তা তদারকিকারী।"
+    bioBn: "বাংলাদেশ সেনাবাহিনীর অবসরপ্রাপ্ত সার্জেন্ট। গুরুত্বপূর্ণ ইন্ডাস্ট্রিয়াল ও কমার্শিয়াল জোনের সার্বক্ষণিক নিরাপত্তা তদারকিকারী।",
+    bioEn: "Retired Sergeant of the Bangladesh Army. Supervising round-the-clock physical security operations across key industrial and commercial hubs."
   }
 ];
 
@@ -205,7 +211,19 @@ export const SiteDataProvider = ({ children }) => {
   const [managementTeam, setManagementTeam] = useState(() => {
     try {
       const saved = localStorage.getItem('brslsl_management_team');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Enrich any records missing bioEn with default initial translations
+          return parsed.map(m => {
+            const init = initialManagementTeam.find(i => i.id === m.id);
+            return {
+              ...m,
+              bioEn: m.bioEn || init?.bioEn || "Key executive officer responsible for operational security and command supervision."
+            };
+          });
+        }
+      }
     } catch (_) {}
     return initialManagementTeam;
   });
@@ -322,7 +340,15 @@ export const SiteDataProvider = ({ children }) => {
       const unsubscribe = onSnapshot(colRef, (snap) => {
         if (!snap.empty) {
           const list = [];
-          snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+          snap.forEach(d => {
+            const data = d.data();
+            const init = initialManagementTeam.find(i => i.id === d.id);
+            list.push({ 
+              id: d.id, 
+              ...data,
+              bioEn: data.bioEn || init?.bioEn || "Key executive officer responsible for operational security and command supervision."
+            });
+          });
           // Sort by order ascending
           list.sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99));
           setManagementTeam(list);

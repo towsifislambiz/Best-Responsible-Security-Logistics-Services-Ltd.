@@ -29,7 +29,8 @@ export default function AdminManagementTeam() {
     phone: '',
     photo: '/assets/team_raju_ahmed.png',
     order: 1,
-    bioBn: ''
+    bioBn: '',
+    bioEn: ''
   });
 
   const handleStartCreate = () => {
@@ -42,7 +43,8 @@ export default function AdminManagementTeam() {
       phone: '01604022929',
       photo: '/assets/team_raju_ahmed.png',
       order: (managementTeam?.length || 0) + 1,
-      bioBn: ''
+      bioBn: '',
+      bioEn: ''
     });
     setShowModal(true);
   };
@@ -57,7 +59,8 @@ export default function AdminManagementTeam() {
       phone: member.phone || '',
       photo: member.photo || '/assets/team_raju_ahmed.png',
       order: member.order || 1,
-      bioBn: member.bioBn || ''
+      bioBn: member.bioBn || '',
+      bioEn: member.bioEn || ''
     });
     setShowModal(true);
   };
@@ -431,17 +434,32 @@ export default function AdminManagementTeam() {
               </div>
 
               {/* Responsibilities / Bio */}
-              <div>
-                <label className="block text-slate-300 font-semibold mb-1">
-                  Responsibilities / Bio (Bengali)
-                </label>
-                <textarea
-                  rows="3"
-                  value={formData.bioBn}
-                  onChange={(e) => setFormData({ ...formData, bioBn: e.target.value })}
-                  placeholder="দায়িত্ব ও কাজের সংক্ষিপ্ত বিবরণ..."
-                  className="w-full bg-[#050d1a] border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-amber-400"
-                ></textarea>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-slate-300 font-semibold mb-1">
+                    Responsibilities / Bio (Bengali)
+                  </label>
+                  <textarea
+                    rows="3"
+                    value={formData.bioBn}
+                    onChange={(e) => setFormData({ ...formData, bioBn: e.target.value })}
+                    placeholder="দায়িত্ব ও কাজের সংক্ষিপ্ত বিবরণ (বাংলা)..."
+                    className="w-full bg-[#050d1a] border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-amber-400"
+                  ></textarea>
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-semibold mb-1">
+                    Responsibilities / Bio (English)
+                  </label>
+                  <textarea
+                    rows="3"
+                    value={formData.bioEn}
+                    onChange={(e) => setFormData({ ...formData, bioEn: e.target.value })}
+                    placeholder="Officer role and responsibilities (English)..."
+                    className="w-full bg-[#050d1a] border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-amber-400"
+                  ></textarea>
+                </div>
               </div>
 
               {/* Actions */}

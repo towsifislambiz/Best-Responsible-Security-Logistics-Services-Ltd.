@@ -3,47 +3,84 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // 1. Inquiries Collection (Contact Form)
-    // Anyone can submit a contact inquiry; Admin can read and manage
-    match /inquiries/{inquiryId} {
-      allow create: if true;
+    // ===============================================================
+    // 1. Guard Requisitions & Manpower Booking Leads
+    // Used by: /hire-guard, QuoteCalculator, /admin/requisitions
+    // ===============================================================
+    match /requisitions/{reqId} {
+      // Anyone can submit a guard requisition request
+      allow create: if request.resource.data.clientName != null 
+                    && request.resource.data.phone != null;
+      
+      // Admin dashboard and command center can read, update status, and auto-prune
       allow read, update, delete: if true;
     }
 
-    // 2. Requisitions Collection (Instant Quotation & Guard Requisition)
-    // Visitors & corporate clients can submit security guard quote requests
-    match /requisitions/{requisitionId} {
-      allow create: if true;
+    // ===============================================================
+    // 2. Job Applications & Guard Recruitment Bio-data
+    // Used by: /career, /admin/recruitment
+    // ===============================================================
+    match /recruitment/{appId} {
+      // Anyone can submit an online job application
+      allow create: if request.resource.data.name != null 
+                    && request.resource.data.phone != null;
+      
+      // Admin HR team can read, review, update status, and delete
       allow read, update, delete: if true;
     }
 
-    // 3. Recruitment Collection (Career & Security Guard Job Applications)
-    // Job applicants can submit their biodata; Admin can review applicants
-    match /recruitment/{recruitmentId} {
-      allow create: if true;
+    // ===============================================================
+    // 3. Contact Inquiries & Emergency Messages
+    // Used by: /contact, /admin/inquiries
+    // ===============================================================
+    match /inquiries/{inqId} {
+      // Anyone can send a message from the Contact page
+      allow create: if request.resource.data.name != null;
+      
+      // Admin can view inbox, reply, and delete messages
       allow read, update, delete: if true;
     }
 
-    // 4. Staff Directory & Guard Profiles
-    // Public can view verified security personnel; Admin manages records
+    // ===============================================================
+    // 4. Management Team Officers Directory
+    // Used by: /management-team, /leadership, /admin/management-team
+    // ===============================================================
+    match /management_team/{memberId} {
+      // Public visitors can view the authorized officers
+      allow read: if true;
+      
+      // Admin can add new officers, update bios, and upload photos
+      allow write: if true;
+    }
+
+    // ===============================================================
+    // 5. Security Staff & Guard Registry
+    // Used by: /admin/staff, public verification
+    // ===============================================================
     match /staff/{staffId} {
-      allow read, write: if true;
+      // Public / verified users can view staff profiles
+      allow read: if true;
+      
+      // Admin can register guards, crop photos, and delete
+      allow write: if true;
     }
 
-    // 5. Corporate Clients, Rate Charts & Site Settings
-    match /clients/{clientId} {
-      allow read, write: if true;
+    // ===============================================================
+    // 6. Global Site Settings, Legal Licenses, Client Directory & Rates
+    // Used by: Navbar, Footer, /licenses, /clients, /pricing, /admin/settings, /admin/security
+    // Documents: 'site_config', 'rates', 'clients', 'licenses', 'admin_auth'
+    // ===============================================================
+    match /settings/{docId} {
+      // Public can read general site configurations, rate charts, licenses, and client lists
+      allow read: if true;
+      
+      // Admin can update site settings, rate charts, and admin security credentials
+      allow write: if true;
     }
 
-    match /settings/{settingId} {
-      allow read, write: if true;
-    }
-
-    match /rates/{rateId} {
-      allow read, write: if true;
-    }
-
-    // Fallback: Allow all read/write for seamless operation
+    // ===============================================================
+    // 7. Fallback for any other collections
+    // ===============================================================
     match /{document=**} {
       allow read, write: if true;
     }

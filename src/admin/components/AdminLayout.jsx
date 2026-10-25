@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { 
   Shield, LayoutDashboard, Users, Building, 
-  FileCheck, UserPlus, DollarSign, Settings, LogOut, ExternalLink, MessageSquare, Award, FileText
+  FileCheck, UserPlus, DollarSign, Settings, LogOut, ExternalLink, MessageSquare, Award, FileText, KeyRound
 } from 'lucide-react';
 import { companyInfo } from '../../data/companyData';
 
@@ -11,11 +11,6 @@ export default function AdminLayout({ children }) {
   const location = useLocation();
 
   useEffect(() => {
-    const isDemo = new URLSearchParams(window.location.search).get('demo');
-    if (isDemo) {
-      localStorage.setItem('brslsl_admin_token', 'DEMO_TOKEN');
-      return;
-    }
     const token = localStorage.getItem('brslsl_admin_token');
     if (!token && location.pathname !== '/admin/login') {
       navigate('/admin/login');
@@ -38,6 +33,7 @@ export default function AdminLayout({ children }) {
     { title: "Contact Inquiries", path: "/admin/inquiries", icon: MessageSquare, badge: "Inbox" },
     { title: "Rate Chart Editor", path: "/admin/rates", icon: DollarSign },
     { title: "Site Settings", path: "/admin/settings", icon: Settings },
+    { title: "Security & Password", path: "/admin/security", icon: KeyRound, badge: "Auth" },
   ];
 
   return (

@@ -38,6 +38,7 @@ import AdminRecruitment from './admin/AdminRecruitment';
 import AdminRates from './admin/AdminRates';
 import AdminInquiries from './admin/AdminInquiries';
 import AdminSettings from './admin/AdminSettings';
+import AdminSecurity from './admin/AdminSecurity';
 
 // Scroll to top helper
 function ScrollToTop() {
@@ -106,6 +107,7 @@ export default function App() {
               <Route path="inquiries" element={<AdminInquiries />} />
               <Route path="rates" element={<AdminRates />} />
               <Route path="settings" element={<AdminSettings />} />
+              <Route path="security" element={<AdminSecurity />} />
             </Route>
 
             {/* Catch-all redirect to Home */}

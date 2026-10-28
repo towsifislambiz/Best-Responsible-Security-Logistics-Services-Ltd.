@@ -1,0 +1,20 @@
+# Robots.txt for Best Responsible Security & Logistics Services Ltd.
+# Official Website: https://bestresonsiblegroup.com
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin
+
+# Googlebot specific directives
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+
+# Official XML Sitemap
+Sitemap: https://bestresonsiblegroup.com/sitemap.xml

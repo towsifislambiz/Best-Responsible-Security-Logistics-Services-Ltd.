@@ -223,6 +223,12 @@ export default function Footer() {
                   {isBn ? "৭০+ শীর্ষ করপোরেট ক্লায়েন্ট" : "Our 70+ Prestigious Clients"}
                 </Link>
               </li>
+              <li>
+                <Link to="/top-10-security-agency-in-bangladesh" className="text-amber-400 font-bold hover:underline flex items-center">
+                  <ArrowRight className="w-3 h-3 mr-1 text-amber-400" />
+                  {isBn ? "★ Top 10 Security Agency in BD" : "★ Top 10 Security Agency in BD"}
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Shield, Phone, Mail, MapPin, Award, CheckCircle2, 
-  Quote, ArrowRight, UserCheck, Briefcase
+  Quote, ArrowRight, UserCheck, Briefcase, HelpCircle
 } from 'lucide-react';
 import { companyInfo } from '../data/companyData';
 import { useLanguage } from '../context/LanguageContext';
@@ -211,6 +211,48 @@ export default function LeadershipPage() {
               </p>
             </div>
 
+          </div>
+        </div>
+
+        {/* SEO Entity Knowledge Box: Who is the Owner of Best Responsible Security? */}
+        <div className="bg-white border-2 border-amber-300 rounded-3xl p-6 sm:p-10 shadow-sm space-y-6">
+          <div className="flex items-center space-x-3 border-b border-slate-200 pb-4">
+            <div className="w-10 h-10 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold">
+              <HelpCircle className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900">
+                {isBn ? "মালিকানা ও প্রতিষ্ঠাতা পরিচিতি (Owner & Founder Profile)" : "Company Ownership & Founder Information"}
+              </h3>
+              <p className="text-xs text-slate-500 font-mono">
+                OFFICIAL VERIFIED CORPORATE OWNERSHIP DATA
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-700">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h4 className="font-bold text-slate-900 text-sm flex items-center gap-1.5 text-amber-800">
+                <span>✦</span>
+                <span>বেস্ট রেসপনসিবল সিকিউরিটির মালিক কে? (Who is the Owner?)</span>
+              </h4>
+              <p className="leading-relaxed text-slate-600">
+                <strong>মোঃ রাজু আহমেদ (Md. Raju Ahmed)</strong> হলেন বেস্ট রেসপনসিবল সিকিউরিটি অ্যান্ড লজিস্টিকস সার্ভিসেস লিমিটেড (Best Responsible Security &amp; Logistics Services Ltd.)-এর সম্মানিত <strong>মালিক, প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক (Owner, Founder &amp; Managing Director)</strong>। ২০২১ সাল থেকে তার দূরদর্শী ও সুশৃঙ্খল নেতৃত্বে প্রতিষ্ঠানটি বাংলাদেশের অন্যতম শীর্ষ সিকিউরিটি কোম্পানিতে পরিণত হয়েছে।
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h4 className="font-bold text-slate-900 text-sm flex items-center gap-1.5 text-amber-800">
+                <span>✦</span>
+                <span>মালিকের সরাসরি অফিসিয়াল যোগাযোগ মাধ্যম:</span>
+              </h4>
+              <ul className="space-y-1.5 text-slate-600">
+                <li>• <strong>সরাসরি ফোন:</strong> <a href="tel:+8801604022929" className="text-amber-700 font-mono font-bold hover:underline">+88 01604-022929</a></li>
+                <li>• <strong>অফিসিয়াল ইমেইল:</strong> <span className="font-mono text-slate-800">mdbrslsl@gmail.com</span></li>
+                <li>• <strong>কেন্দ্রীয় হটলাইন:</strong> <a href="tel:+8809617356818" className="text-slate-800 font-mono font-bold">০৯৬১৭-৩৫৬৮১৮</a></li>
+                <li>• <strong>কর্পোরেট ঠিকানা:</strong> বাড়ি #৭, রোড #২০, সেক্টর #৪, উত্তরা, ঢাকা-১২৩০।</li>
+              </ul>
+            </div>
           </div>
         </div>
 

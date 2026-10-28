@@ -52,7 +52,7 @@ export default function Navbar() {
   const [openDesktopDropdown, setOpenDesktopDropdown] = useState(initialOpen); // Desktop click/hover dropdown
   const navRef = useRef(null);
 
-  const isWhoActive = ['/about', '/leadership', '/management-team', '/organogram', '/licenses', '/training'].includes(location.pathname);
+  const isWhoActive = ['/about', '/leadership', '/management-team', '/organogram', '/licenses', '/training', '/top-10-security-agency-in-bangladesh', '/top-10-security-agency-in-bd'].includes(location.pathname);
   const isServicesActive = location.pathname.startsWith('/services');
   const isPricingActive = ['/pricing', '/hire-guard'].includes(location.pathname);
   const isClientsActive = ['/clients', '/recommendations', '/sectors', '/gallery'].includes(location.pathname);
@@ -322,6 +322,21 @@ export default function Navbar() {
                     </div>
                     <span className="text-[11px] text-slate-500 block mt-0.5 font-normal">
                       {t('nav.trainingSub')}
+                    </span>
+                  </Link>
+                  <Link 
+                    to="/top-10-security-agency-in-bangladesh" 
+                    onClick={closeAll}
+                    className="group/item block px-3 py-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-400/30 transition-all duration-150"
+                  >
+                    <div className="flex items-center justify-between">
+                      <strong className="block text-amber-900 text-sm font-bold flex items-center gap-1.5">
+                        <span>★ Top 10 Security Agency</span>
+                      </strong>
+                      <ChevronRight className="w-3.5 h-3.5 text-amber-700" />
+                    </div>
+                    <span className="text-[11px] text-amber-800 block mt-0.5 font-medium">
+                      {isBn ? '২০২৬ সালের শীর্ষ এজেন্সির তালিকা' : '2026 Industry Rankings & Review'}
                     </span>
                   </Link>
                 </div>
@@ -726,6 +741,7 @@ export default function Navbar() {
                   <Link to="/organogram" onClick={closeAll} className="block py-1 hover:text-amber-400">{t('nav.organogram')}</Link>
                   <Link to="/licenses" onClick={closeAll} className="block py-1 hover:text-amber-400">{t('nav.licenses')}</Link>
                   <Link to="/training" onClick={closeAll} className="block py-1 hover:text-amber-400">{t('nav.training')}</Link>
+                  <Link to="/top-10-security-agency-in-bangladesh" onClick={closeAll} className="block py-1 text-amber-400 font-bold hover:underline">★ Top 10 Security Agency (২০২৬)</Link>
                 </div>
               )}
             </div>

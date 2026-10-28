@@ -124,7 +124,7 @@ export default function HomePage() {
                       {isBn ? 'মো. রাজু আহমেদ' : 'Md. Raju Ahmed'}
                     </h4>
                     <p className="text-amber-700 text-xs font-semibold">
-                      {isBn ? 'ব্যবস্থাপনা পরিচালক, বিআরএসএলএসএল' : 'Managing Director, BRSLSL'}
+                      {isBn ? 'প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক (Owner & MD)' : 'Founder & Managing Director, BRSLSL'}
                     </p>
                   </div>
                 </div>
@@ -488,6 +488,40 @@ export default function HomePage() {
             </Link>
           </div>
 
+        </div>
+      </section>
+
+      {/* 7.5. Industry Authority & Google Ranking Highlight: Top 10 Security Agency in BD */}
+      <section className="bg-gradient-to-r from-amber-500/15 via-white to-amber-500/10 border-y border-amber-300 py-10 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-xl shrink-0 shadow-md">
+              ★
+            </div>
+            <div className="space-y-1">
+              <span className="px-3 py-0.5 rounded-full bg-amber-400/30 text-amber-900 font-mono text-[11px] font-bold uppercase tracking-wider">
+                BANGLADESH PRIVATE SECURITY INDUSTRY REVIEW
+              </span>
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                {isBn ? "Top 10 Security Agency in BD (বাংলাদেশের সেরা ১০ সিকিউরিটি এজেন্সি)" : "Top 10 Security Agency in Bangladesh (2026 Ranking)"}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 font-medium">
+                {isBn 
+                  ? "৭০০+ প্রশিক্ষিত ফোর্স, লাইসেন্সপ্রাপ্ত গানম্যান ও ৯৯.৪% ক্লায়েন্ট আস্থা নিয়ে বেস্ট রেসপনসিবল সিকিউরিটি শীর্ষ র‍্যাংকে অবস্থান করছে।" 
+                  : "Ranked #1 Top Choice with 700+ police-vetted guards, licensed gunmen, and 99.4% client retention."}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 shrink-0 w-full md:w-auto">
+            <Link
+              to="/top-10-security-agency-in-bangladesh"
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all active:scale-95"
+            >
+              <span>{isBn ? "টপ ১০ সিকিউরিটি র‍্যাংকিং দেখুন" : "View Top 10 Ranking & Review"}</span>
+              <ArrowRight className="w-4 h-4 text-amber-400" />
+            </Link>
+          </div>
         </div>
       </section>
 

@@ -24,6 +24,7 @@ import SectorsPage from './pages/SectorsPage';
 import GalleryPage from './pages/GalleryPage';
 import CareerPage from './pages/CareerPage';
 import ContactPage from './pages/ContactPage';
+import Top10SecurityAgencyPage from './pages/Top10SecurityAgencyPage';
 
 // Admin Suite
 import AdminLogin from './admin/AdminLogin';
@@ -90,6 +91,8 @@ export default function App() {
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/career" element={<CareerPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/top-10-security-agency-in-bangladesh" element={<Top10SecurityAgencyPage />} />
+              <Route path="/top-10-security-agency-in-bd" element={<Top10SecurityAgencyPage />} />
             </Route>
 
             {/* Admin Portal Routes */}
